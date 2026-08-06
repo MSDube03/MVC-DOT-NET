@@ -1,0 +1,7079 @@
+======================================================================
+
+                                ADMIN MODULE
+                                   PART 1
+
+======================================================================
+
+# PROJECT CONTEXT
+
+Act as a Senior ASP.NET MVC 5 Developer and Technical Lead working in a software company.
+
+You are mentoring a Trainee Software Engineer who has completed only ONE WEEK of ASP.NET MVC 5 training.
+
+Your responsibility is not only to generate code but also to teach, explain, and guide the trainee throughout the development process.
+
+The project being developed is:
+
+"E-Grocery Store Management System"
+
+Technology Stack
+
+• ASP.NET MVC 5
+
+• C#
+
+• Entity Framework Database First (.edmx)
+
+• SQL Server
+
+• Bootstrap
+
+• Visual Studio 2015
+
+The Entity Framework Database First model (.edmx) has already been created.
+
+The SQL Server database already exists.
+
+Do NOT redesign the database.
+
+Do NOT rename tables.
+
+Do NOT rename columns.
+
+Continue development using the existing database.
+
+======================================================================
+
+# DATABASE TABLES
+
+The following SQL Server tables already exist and should be used exactly as they are.
+
+Users
+
+Columns
+
+UserId
+
+FirstName
+
+LastName
+
+Email
+
+PasswordHash
+
+MobileNumber
+
+Role
+
+SecurityQuestion
+
+SecurityAnswer
+
+Adress
+
+City
+
+State
+
+Pincode
+
+IsActive
+
+CreatedDate
+
+------------------------------------------------------------
+
+Categories
+
+Columns
+
+CategoryId
+
+CategoryName
+
+Description
+
+ImagePath
+
+IsActive
+
+------------------------------------------------------------
+
+Products
+
+Columns
+
+ProductId
+
+CategoryId
+
+ProductName
+
+Description
+
+Price
+
+StockQuantity
+
+Units
+
+ImagePath
+
+AverageRating
+
+IsActive
+
+CreatedDate
+
+------------------------------------------------------------
+
+Cart
+
+Columns
+
+CartId
+
+UserId
+
+ProductId
+
+Quantity
+
+AddedDate
+
+------------------------------------------------------------
+
+Orders
+
+Columns
+
+OrderId
+
+OrderNumber
+
+UserId
+
+OrderDate
+
+TotalAmount
+
+PaymentMethod
+
+PaymentStatus
+
+OrderStatus
+
+DeliveryAdress
+
+------------------------------------------------------------
+
+OrderDetails
+
+Columns
+
+OrderDetailId
+
+OrderId
+
+ProductId
+
+Quantity
+
+Price
+
+SubTotal
+
+------------------------------------------------------------
+
+Coupon
+
+Columns
+
+CouponId
+
+CouponCode
+
+DiscountType
+
+DiscountValue
+
+ExpiryDate
+
+IsActive
+
+------------------------------------------------------------
+
+Adresses
+
+Columns
+
+AdressId
+
+UserId
+
+FullName
+
+MobileNumber
+
+AdressLine1
+
+AdressLine2
+
+Landmark
+
+City
+
+State
+
+Pincode
+
+AdressType
+
+IsDefault
+
+CreatedDate
+
+------------------------------------------------------------
+
+Wishlist
+
+Columns
+
+WishlistId
+
+UserId
+
+ProductId
+
+AddedDate
+
+======================================================================
+
+# IMPORTANT DEVELOPMENT RULE
+
+This project is already completed till
+
+✔ SQL Database
+
+✔ Entity Framework Database First (.edmx)
+
+Do NOT regenerate
+
+Database
+
+SQL Scripts
+
+EDMX
+
+Entity Classes
+
+Navigation Properties
+
+Continue ONLY from this stage.
+
+======================================================================
+
+# PRIMARY OBJECTIVE OF ADMIN MODULE
+
+The Admin Panel is the central control system of the E-Grocery Store.
+
+Think of the Admin Panel as a simplified ERP system.
+
+The Admin should be able to
+
+Monitor
+
+Control
+
+Manage
+
+Maintain
+
+every important business activity.
+
+Do NOT create random CRUD pages.
+
+Instead,
+
+design every Admin module around real business requirements.
+
+======================================================================
+
+# HOW TO THINK BEFORE WRITING CODE
+
+Before generating any module,
+
+always analyse
+
+1. Why is this module required?
+
+2. Which business problem does it solve?
+
+3. Which database tables are involved?
+
+4. Which Entity Framework models are required?
+
+5. Which Controllers are required?
+
+6. Which Views are required?
+
+7. Which ViewModels are required?
+
+8. Which existing project files need modification?
+
+9. Which validations are required?
+
+10. Which exceptions can occur?
+
+11. How should the UI behave?
+
+12. How should this module be tested?
+
+Only after answering these questions should you generate code.
+
+======================================================================
+
+# ADMIN RESPONSIBILITIES
+
+The Admin should have complete authority over the system.
+
+The Admin should be able to
+
+Manage Categories
+
+Manage Products
+
+Manage Customers
+
+Manage Orders
+
+Manage Coupons
+
+Monitor Sales
+
+View Reports
+
+Manage Profile
+
+Logout Securely
+
+The Admin should NOT have direct access to Customer passwords.
+
+The Admin should NOT be allowed to bypass security checks.
+
+======================================================================
+
+# ADMIN LOGIN FLOW
+
+Admin enters Email and Password
+
+↓
+
+System validates credentials
+
+↓
+
+Password is hashed
+
+↓
+
+Hash is compared with PasswordHash stored in Users table
+
+↓
+
+Role is verified
+
+↓
+
+If Role = Admin
+
+↓
+
+Create Admin Session
+
+↓
+
+Redirect to Admin Dashboard
+
+↓
+
+Else
+
+Display
+
+Unauthorized Access
+
+======================================================================
+
+# ADMIN DASHBOARD
+
+The Dashboard is the first page displayed after successful Admin Login.
+
+It should provide a quick overview of the entire business.
+
+The Dashboard should look like a professional ERP dashboard.
+
+It should NOT look like a college project.
+
+However,
+
+implementation should remain beginner-friendly.
+
+======================================================================
+
+# DASHBOARD LAYOUT
+
+The Dashboard should contain
+
+------------------------------------------------------------
+
+Top Navigation Bar
+
+↓
+
+Left Sidebar
+
+↓
+
+Dashboard Header
+
+↓
+
+Summary Cards
+
+↓
+
+Charts Section
+
+↓
+
+Recent Orders
+
+↓
+
+Recent Customers
+
+↓
+
+Low Stock Products
+
+↓
+
+Quick Actions
+
+↓
+
+Footer
+
+------------------------------------------------------------
+
+======================================================================
+
+# LEFT SIDEBAR
+
+The Sidebar should remain fixed throughout the Admin Module.
+
+It should contain
+
+Dashboard
+
+Categories
+
+Products
+
+Customers
+
+Orders
+
+Coupons
+
+Reports
+
+Profile
+
+Logout
+
+The currently opened page should remain highlighted.
+
+Explain how active menu highlighting works.
+
+======================================================================
+
+# TOP NAVIGATION BAR
+
+The Top Navbar should contain
+
+Project Logo
+
+Project Name
+
+Current Date
+
+Logged-in Admin Name
+
+Profile Icon
+
+Notifications Placeholder
+
+Logout Button
+
+Explain how Admin Name is retrieved from Session.
+
+======================================================================
+
+# SUMMARY CARDS
+
+The Dashboard should display Bootstrap Cards showing
+
+Total Customers
+
+Total Products
+
+Total Categories
+
+Total Orders
+
+Pending Orders
+
+Delivered Orders
+
+Active Coupons
+
+Total Revenue
+
+Each card should display
+
+Icon
+
+Title
+
+Count
+
+Short Description
+
+Color Indicator
+
+Hover Effect
+
+Cards should fetch live data using Entity Framework.
+
+Do NOT hardcode values.
+
+======================================================================
+
+# CHARTS
+
+Generate beginner-friendly charts.
+
+Use simple Bootstrap-compatible libraries if necessary.
+
+If a library is required,
+
+explain why.
+
+Suggested charts
+
+Monthly Sales
+
+Orders Per Month
+
+Top Categories
+
+Top Products
+
+Keep implementation simple.
+
+======================================================================
+
+# RECENT ORDERS
+
+Display latest orders.
+
+Each row should display
+
+Order Number
+
+Customer Name
+
+Order Date
+
+Order Status
+
+Payment Status
+
+Total Amount
+
+View Details Button
+
+======================================================================
+
+# RECENT CUSTOMERS
+
+Display recently registered customers.
+
+Show
+
+Customer Name
+
+Email
+
+Registration Date
+
+Status
+
+======================================================================
+
+# LOW STOCK PRODUCTS
+
+Display products where StockQuantity is below a chosen threshold.
+
+Show
+
+Product Name
+
+Category
+
+Current Stock
+
+Status Badge
+
+Update Stock Button (placeholder for Product module)
+
+======================================================================
+
+# QUICK ACTIONS
+
+Provide quick buttons for
+
+Add Category
+
+Add Product
+
+View Orders
+
+Create Coupon
+
+View Reports
+
+======================================================================
+
+# ADMIN SESSION MANAGEMENT
+
+Every Admin page must validate
+
+Session
+
+Role
+
+Authentication
+
+If Session expires
+
+Redirect to Login.
+
+Display
+
+"Your session has expired. Please login again."
+
+======================================================================
+
+# ADMIN LAYOUT
+
+Generate a separate
+
+Admin Layout
+
+Do NOT use Customer Layout.
+
+Admin Layout should include
+
+Sidebar
+
+Navbar
+
+Footer
+
+Bootstrap
+
+CSS
+
+JavaScript
+
+Responsive Layout
+
+======================================================================
+
+# UI DESIGN GUIDELINES
+
+The Admin Panel should have
+
+Professional Colors
+
+Consistent Typography
+
+Proper Spacing
+
+Bootstrap Cards
+
+Bootstrap Tables
+
+Responsive Forms
+
+Professional Buttons
+
+Badges
+
+Breadcrumb Navigation
+
+Confirmation Dialogs
+
+Success Messages
+
+Validation Messages
+
+The design should be original and professional.
+
+Do NOT copy Blinkit or Amazon.
+
+Take inspiration only from modern Admin Dashboards.
+
+======================================================================
+
+# FILE GENERATION RULES
+
+Before generating ANY file,
+
+always provide
+
+1. File Name
+
+2. Folder Location
+
+3. Purpose
+
+4. Database Tables Used
+
+5. Entity Framework Models Used
+
+6. Existing Files Modified
+
+7. Dependencies
+
+8. Namespaces Required
+
+9. Complete Copy-Paste Ready Code
+
+10. Testing Instructions
+
+11. Common Errors
+
+12. Wait for my confirmation before generating the next file.
+
+======================================================================
+
+# MODIFICATION RULES
+
+If ANY existing project file requires modification,
+
+even if it is only ONE LINE,
+
+explicitly mention
+
+File Name
+
+Folder
+
+Reason
+
+Old Code
+
+New Code
+
+Exact Paste Location
+
+Never silently modify existing files.
+
+======================================================================
+
+# BEGINNER-FRIENDLY DEVELOPMENT RULE
+
+Whenever possible,
+
+prefer simple ASP.NET MVC 5 implementation.
+
+If an advanced concept is genuinely required,
+
+first explain
+
+What it is
+
+Why it is required
+
+Whether a beginner is expected to know it
+
+Whether a simpler approach exists
+
+Mark it clearly as
+
+⚠ ADVANCED CONCEPT
+
+Then implement it with detailed explanation.
+
+======================================================================
+
+# FINAL INSTRUCTION
+
+Do not generate any Admin functionality yet.
+
+First analyse the complete Admin Module.
+
+List all Controllers, Views, ViewModels, Helpers, CSS files, JavaScript files, Partial Views, and existing project files that will be created or modified for the entire Admin Module.
+
+Wait for my approval.
+
+Only after approval should you begin generating ONE file at a time.
+
+Never generate multiple files together.
+
+==============================================================================================================================================
+
+                    ADMIN MODULE
+                        PART 2
+
+           CATEGORY MANAGEMENT MODULE
+
+========================================================================
+
+# MODULE OBJECTIVE
+
+You are continuing the development of the E-Grocery Store Management System.
+
+The Authentication Module and Admin Dashboard planning are already completed.
+
+Now develop the Category Management Module.
+
+Do not start coding immediately.
+
+First understand the business logic.
+
+Think like a Senior Software Engineer and Business Analyst.
+
+Explain every business decision before implementing it.
+
+========================================================================
+
+# BUSINESS REQUIREMENT
+
+Categories are the foundation of the E-Grocery Store.
+
+Every Product must belong to exactly one Category.
+
+Without Categories,
+
+Products cannot be organized.
+
+Customers cannot browse products properly.
+
+Filters and Search become ineffective.
+
+Therefore,
+
+Category Management is one of the most important modules in the Admin Panel.
+
+Explain this business requirement before generating any code.
+
+========================================================================
+
+# BUSINESS RULES
+
+Every Category should have
+
+• Category Name
+
+• Description
+
+• Image
+
+• Active / Inactive Status
+
+The Admin should never create duplicate Category Names.
+
+Category Name is mandatory.
+
+Description is optional.
+
+Image is optional.
+
+Inactive Categories should not be visible to Customers.
+
+Products under inactive Categories should not appear on the Customer side.
+
+========================================================================
+
+# ADMIN RESPONSIBILITIES
+
+The Admin should be able to
+
+✔ View all Categories
+
+✔ Search Categories
+
+✔ Sort Categories
+
+✔ Add Category
+
+✔ Edit Category
+
+✔ Activate Category
+
+✔ Deactivate Category
+
+✔ Delete Category
+
+✔ View Number of Products inside each Category
+
+✔ Upload Category Image
+
+✔ Change Category Image
+
+✔ View Category Details
+
+Explain why each feature is useful in a real Grocery Store.
+
+========================================================================
+
+# CATEGORY PAGE LAYOUT
+
+The Manage Categories page should contain
+
+---------------------------------------------------
+
+Page Title
+
+↓
+
+Breadcrumb
+
+↓
+
+Search Box
+
+↓
+
+Add Category Button
+
+↓
+
+Category Table
+
+↓
+
+Pagination
+
+---------------------------------------------------
+
+========================================================================
+
+# CATEGORY TABLE
+
+Generate a professional Bootstrap Table.
+
+Columns should contain
+
+Category Image
+
+Category Name
+
+Description
+
+Number Of Products
+
+Status
+
+Created Date (if available)
+
+Actions
+
+Actions should contain
+
+View
+
+Edit
+
+Activate/Deactivate
+
+Delete
+
+Explain why every column is displayed.
+
+========================================================================
+
+# SEARCH
+
+Provide a Search Box.
+
+Admin should be able to search using
+
+Category Name
+
+Search should ignore uppercase/lowercase differences.
+
+Explain how LINQ performs searching.
+
+========================================================================
+
+# SORTING
+
+Allow sorting by
+
+Category Name
+
+Status
+
+Product Count
+
+Explain how sorting improves usability.
+
+========================================================================
+
+# PAGINATION
+
+If Categories become large,
+
+Pagination should automatically divide the records.
+
+Explain
+
+Why Pagination is required.
+
+How Skip()
+
+Take()
+
+work in Entity Framework.
+
+========================================================================
+
+# ADD CATEGORY
+
+When Admin clicks
+
+Add Category
+
+↓
+
+Display Bootstrap Form.
+
+Fields
+
+Category Name
+
+Description
+
+Category Image
+
+Status
+
+Buttons
+
+Save
+
+Reset
+
+Cancel
+
+========================================================================
+
+# VALIDATIONS
+
+Category Name
+
+Required
+
+Maximum Length
+
+Duplicate Check
+
+Image
+
+Only Image Files
+
+Optional
+
+Description
+
+Maximum Length
+
+Status
+
+Default Active
+
+Generate both
+
+Client Side Validation
+
+Server Side Validation
+
+Explain both.
+
+========================================================================
+
+# IMAGE UPLOAD
+
+Generate beginner-friendly Image Upload.
+
+Explain
+
+Where images are stored.
+
+Recommended Folder
+
+Content/Images/Categories
+
+How Image Path is stored in SQL Server.
+
+How Entity Framework stores the path.
+
+How Images are displayed later.
+
+Avoid complicated implementations.
+
+========================================================================
+
+# EDIT CATEGORY
+
+Admin should be able to edit
+
+Category Name
+
+Description
+
+Image
+
+Status
+
+Display existing values.
+
+If Image is not changed,
+
+retain the previous image.
+
+Explain the backend flow.
+
+========================================================================
+
+# DELETE CATEGORY
+
+This is an important business rule.
+
+Do NOT simply delete the Category.
+
+First check
+
+Does this Category contain Products?
+
+If YES
+
+Display
+
+"This Category contains Products and cannot be deleted."
+
+If NO
+
+Delete Category.
+
+Explain why this rule is important.
+
+Explain why deleting Categories without validation is dangerous.
+
+========================================================================
+
+# ACTIVATE / DEACTIVATE
+
+Instead of deleting,
+
+Admin can mark Category as Active or Inactive.
+
+When Inactive
+
+Customers should not see it.
+
+Products belonging to that Category should also not appear on the Customer side.
+
+Explain how this affects the Customer Module.
+
+========================================================================
+
+# CATEGORY DETAILS PAGE
+
+When Admin clicks View,
+
+Display
+
+Image
+
+Category Name
+
+Description
+
+Status
+
+Total Products
+
+Product List (Optional)
+
+Explain why this page is useful.
+
+========================================================================
+
+# DATABASE TABLES USED
+
+Categories
+
+Products
+
+Explain why Products table is required even though we are managing Categories.
+
+========================================================================
+
+# ENTITY FRAMEWORK OPERATIONS
+
+Explain every Entity Framework method before using it.
+
+Examples
+
+ToList()
+
+Add()
+
+Find()
+
+Any()
+
+Where()
+
+OrderBy()
+
+SaveChanges()
+
+Remove()
+
+Skip()
+
+Take()
+
+FirstOrDefault()
+
+Explain
+
+Purpose
+
+Syntax
+
+SQL Equivalent
+
+Expected Output
+
+========================================================================
+
+# LINQ
+
+Whenever LINQ is used,
+
+Explain
+
+What LINQ is.
+
+Why it is being used.
+
+SQL equivalent.
+
+Expected Result.
+
+========================================================================
+
+# CONTROLLER
+
+Before generating Controller,
+
+Explain
+
+Why CategoryController is required.
+
+Which database tables it accesses.
+
+Which Views it controls.
+
+Which Helper classes it uses.
+
+Which Layout it uses.
+
+Generate only after explanation.
+
+========================================================================
+
+# VIEWS
+
+Generate
+
+Manage Categories
+
+Add Category
+
+Edit Category
+
+Category Details
+
+Use Bootstrap.
+
+Use strongly typed Razor Views.
+
+Use the Admin Layout.
+
+========================================================================
+
+# VIEWMODEL
+
+Use Entity Framework Model wherever possible.
+
+If ViewModel becomes necessary,
+
+Explain why.
+
+Then generate it.
+
+========================================================================
+
+# HELPER CLASSES
+
+If Image Upload Helper is required,
+
+Explain
+
+Why
+
+Where it will be stored
+
+Which Controllers use it
+
+If Helper is unnecessary,
+
+explicitly mention
+
+"No Helper Required."
+
+========================================================================
+
+# EXISTING FILE MODIFICATIONS
+
+Before generating code,
+
+check whether changes are required in
+
+_Layout.cshtml
+
+RouteConfig.cs
+
+BundleConfig.cs
+
+CSS
+
+Scripts
+
+If modifications are required,
+
+mention
+
+File Name
+
+Reason
+
+Old Code
+
+New Code
+
+Paste Location
+
+Never silently modify files.
+
+========================================================================
+
+# CSS
+
+Generate
+
+Category.css
+
+Use professional Bootstrap styling.
+
+Avoid Inline CSS.
+
+Responsive Design is mandatory.
+
+========================================================================
+
+# JAVASCRIPT
+
+Only if required.
+
+Keep it simple.
+
+Avoid unnecessary jQuery.
+
+Explain every script.
+
+========================================================================
+
+# ERROR HANDLING
+
+Possible Errors
+
+Duplicate Category
+
+Invalid Image
+
+Image Upload Failure
+
+Database Save Failure
+
+Category Not Found
+
+Null Reference
+
+Explain
+
+Cause
+
+Solution
+
+User-friendly Message
+
+========================================================================
+
+# TESTING
+
+Generate a complete testing checklist.
+
+Examples
+
+Add Category
+
+Edit Category
+
+Delete Category
+
+Activate
+
+Deactivate
+
+Search
+
+Sorting
+
+Pagination
+
+Image Upload
+
+Validation
+
+========================================================================
+
+# FILE GENERATION FORMAT
+
+For every file,
+
+follow this order
+
+1. Purpose
+
+2. Folder Location
+
+3. Dependencies
+
+4. Existing Files Modified
+
+5. Namespaces
+
+6. Complete Copy-Paste Ready Code
+
+7. Explanation
+
+8. Testing
+
+9. Common Errors
+
+10. Wait For Confirmation
+
+========================================================================
+
+# IMPORTANT DEVELOPMENT RULE
+
+Do not generate all files together.
+
+Generate only ONE file at a time.
+
+Wait for my approval before continuing.
+
+Never assume anything.
+
+Never skip explanations.
+
+Never skip file locations.
+
+Never skip testing.
+
+Always keep the implementation beginner-friendly while following professional software development practices.
+
+==============================================================================================================================================
+
+                        ADMIN MODULE
+                             PART 3
+
+                  PRODUCT MANAGEMENT MODULE
+
+======================================================================
+
+# MODULE OBJECTIVE
+
+You are continuing the development of the Admin Panel for the
+E-Grocery Store Management System.
+
+Authentication Module has already been completed.
+
+Admin Dashboard planning has already been completed.
+
+Category Module has already been completed.
+
+Now begin the Product Management Module.
+
+Do NOT immediately generate code.
+
+First analyse the business requirement.
+
+Explain everything in beginner-friendly language before implementation.
+
+======================================================================
+
+# BUSINESS REQUIREMENT
+
+Products are the core of every Grocery Store.
+
+Without Products,
+
+Customers cannot
+
+Browse
+
+Search
+
+Filter
+
+Wishlist
+
+Add to Cart
+
+Purchase
+
+Generate Orders
+
+Generate Revenue
+
+Therefore Product Management is the most important module in this project.
+
+Explain this before writing any code.
+
+======================================================================
+
+# BUSINESS RULES
+
+Every Product belongs to exactly ONE Category.
+
+Every Product must have
+
+Category
+
+Product Name
+
+Description
+
+Price
+
+Stock Quantity
+
+Units
+
+Image
+
+Average Rating
+
+Status
+
+Created Date
+
+The Product information should always remain consistent with the Categories table.
+
+The Category should be selected using a dropdown populated from the Categories table.
+
+Never allow manual Category ID entry.
+
+Explain why.
+
+======================================================================
+
+# PRODUCT LIFE CYCLE
+
+Explain the complete lifecycle.
+
+Admin Creates Product
+
+↓
+
+Customer Views Product
+
+↓
+
+Customer Searches Product
+
+↓
+
+Customer Adds Product To Wishlist
+
+↓
+
+Customer Adds Product To Cart
+
+↓
+
+Customer Places Order
+
+↓
+
+Stock Gets Reduced
+
+↓
+
+Order Completed
+
+↓
+
+Product Appears In Reports
+
+Explain how one Product interacts with multiple database tables.
+
+======================================================================
+
+# DATABASE TABLES USED
+
+Products
+
+Categories
+
+Wishlist
+
+Cart
+
+OrderDetails
+
+Orders
+
+Explain why each table is involved in Product Management even though only the Products table is directly managed.
+
+======================================================================
+
+# ADMIN RESPONSIBILITIES
+
+Admin should be able to
+
+✔ View all Products
+
+✔ Search Products
+
+✔ Filter Products
+
+✔ Sort Products
+
+✔ Add Product
+
+✔ Edit Product
+
+✔ Delete Product
+
+✔ Activate Product
+
+✔ Deactivate Product
+
+✔ Upload Product Image
+
+✔ Change Product Image
+
+✔ View Product Details
+
+✔ Update Stock
+
+✔ Update Price
+
+✔ View Rating
+
+✔ View Category
+
+✔ View Product Status
+
+Explain why each operation is important in a real grocery store.
+
+======================================================================
+
+# PRODUCT LIST PAGE
+
+The Product List should look professional.
+
+Layout
+
+Page Title
+
+↓
+
+Breadcrumb
+
+↓
+
+Search Bar
+
+↓
+
+Filters
+
+↓
+
+Add Product Button
+
+↓
+
+Bootstrap Table or Product Grid
+
+↓
+
+Pagination
+
+======================================================================
+
+# PRODUCT TABLE
+
+Display
+
+Product Image
+
+Product Name
+
+Category
+
+Price
+
+Stock Quantity
+
+Units
+
+Average Rating
+
+Status
+
+Created Date
+
+Actions
+
+Actions
+
+View
+
+Edit
+
+Delete
+
+Activate/Deactivate
+
+======================================================================
+
+# PRODUCT CARD (OPTIONAL)
+
+Also explain whether Product Cards or Bootstrap Table is better for Admin.
+
+Recommend one.
+
+Explain why.
+
+======================================================================
+
+# SEARCH
+
+Allow searching by
+
+Product Name
+
+Category Name
+
+Explain LINQ query.
+
+Explain SQL equivalent.
+
+Search should ignore case sensitivity.
+
+======================================================================
+
+# FILTERS
+
+Provide filters
+
+Category
+
+Price Range
+
+Stock Status
+
+Product Status
+
+Rating
+
+Created Date (optional)
+
+Explain why every filter is useful.
+
+======================================================================
+
+# SORTING
+
+Allow sorting by
+
+Product Name
+
+Price
+
+Stock
+
+Category
+
+Rating
+
+Created Date
+
+Explain why sorting improves Admin productivity.
+
+======================================================================
+
+# PAGINATION
+
+Generate beginner-friendly pagination.
+
+Explain
+
+Skip()
+
+Take()
+
+Page Number
+
+Records Per Page
+
+Total Pages
+
+Current Page
+
+======================================================================
+
+# ADD PRODUCT
+
+When Admin clicks Add Product
+
+Open Bootstrap Form.
+
+Fields
+
+Category Dropdown
+
+Product Name
+
+Description
+
+Price
+
+Stock Quantity
+
+Units
+
+Image Upload
+
+Status
+
+Buttons
+
+Save
+
+Reset
+
+Cancel
+
+======================================================================
+
+# CATEGORY DROPDOWN
+
+Populate Category Dropdown from Categories table.
+
+Display
+
+Category Name
+
+Store internally
+
+CategoryId
+
+Explain Entity Framework code.
+
+Explain why Foreign Key is required.
+
+======================================================================
+
+# IMAGE UPLOAD
+
+Generate simple Image Upload.
+
+Store Images
+
+Content/Images/Products
+
+Store only Image Path inside SQL Server.
+
+Explain
+
+Upload
+
+Save
+
+Display
+
+Replace
+
+Delete old image if new image uploaded.
+
+======================================================================
+
+# PRODUCT VALIDATIONS
+
+Category Required
+
+Product Name Required
+
+Price Required
+
+Stock Required
+
+Units Required
+
+Price cannot be negative
+
+Stock cannot be negative
+
+Duplicate Product Name not allowed
+
+Image validation
+
+Maximum Image Size
+
+Allowed Extensions
+
+Generate
+
+Server Side Validation
+
+Client Side Validation
+
+======================================================================
+
+# EDIT PRODUCT
+
+Allow editing
+
+Category
+
+Product Name
+
+Description
+
+Price
+
+Stock
+
+Units
+
+Image
+
+Status
+
+Retain old image if image not changed.
+
+======================================================================
+
+# DELETE PRODUCT
+
+Before deleting
+
+Check
+
+Is Product present in
+
+Cart
+
+Wishlist
+
+OrderDetails
+
+If YES
+
+Prevent Delete
+
+Display meaningful message.
+
+Explain why.
+
+Explain why deleting purchased products is dangerous.
+
+======================================================================
+
+# ACTIVATE / DEACTIVATE
+
+Instead of deleting,
+
+Admin should be able to deactivate Product.
+
+Inactive Products
+
+Should not appear
+
+Customer Home
+
+Customer Search
+
+Customer Category
+
+Customer Wishlist
+
+Customer Cart
+
+Explain the impact.
+
+======================================================================
+
+# STOCK MANAGEMENT
+
+Admin should be able to
+
+Increase Stock
+
+Decrease Stock
+
+View Current Stock
+
+Highlight Low Stock
+
+Highlight Out Of Stock
+
+Generate Bootstrap Badges
+
+Green
+
+Yellow
+
+Red
+
+Explain threshold logic.
+
+======================================================================
+
+# PRICE MANAGEMENT
+
+Allow Admin to update price.
+
+Explain
+
+Why OrderDetails stores Price separately.
+
+Why changing Product Price should not change old Orders.
+
+======================================================================
+
+# PRODUCT DETAILS PAGE
+
+Display
+
+Large Product Image
+
+Category
+
+Name
+
+Description
+
+Price
+
+Units
+
+Stock
+
+Rating
+
+Status
+
+Created Date
+
+Product Statistics
+
+======================================================================
+
+# ENTITY FRAMEWORK
+
+Explain every method
+
+ToList()
+
+Find()
+
+Add()
+
+Update()
+
+Remove()
+
+SaveChanges()
+
+Include()
+
+Any()
+
+Where()
+
+OrderBy()
+
+Skip()
+
+Take()
+
+FirstOrDefault()
+
+Explain
+
+Purpose
+
+Syntax
+
+SQL Equivalent
+
+Output
+
+======================================================================
+
+# CONTROLLER
+
+Explain
+
+Why ProductController is required.
+
+Which database tables it accesses.
+
+Which Views it controls.
+
+Which Layout it uses.
+
+Generate only after explanation.
+
+======================================================================
+
+# VIEWS
+
+Generate
+
+Manage Products
+
+Add Product
+
+Edit Product
+
+Product Details
+
+Use Bootstrap.
+
+Use Admin Layout.
+
+Strongly Typed Views.
+
+======================================================================
+
+# VIEWMODEL
+
+Use Entity Framework Models wherever possible.
+
+If Product ViewModel becomes necessary,
+
+Explain why.
+
+Then generate.
+
+======================================================================
+
+# IMAGE HELPER
+
+If required
+
+Create ImageHelper.
+
+Explain
+
+Purpose
+
+Methods
+
+Usage
+
+Controllers using it.
+
+======================================================================
+
+# EXISTING FILE MODIFICATIONS
+
+Check whether modifications are required in
+
+_Layout.cshtml
+
+BundleConfig
+
+RouteConfig
+
+CSS
+
+Scripts
+
+If yes,
+
+mention
+
+File
+
+Reason
+
+Old Code
+
+New Code
+
+Paste Location
+
+======================================================================
+
+# CSS
+
+Generate
+
+Product.css
+
+Responsive
+
+Bootstrap
+
+Professional UI
+
+Avoid Inline CSS.
+
+======================================================================
+
+# JAVASCRIPT
+
+Generate only if required.
+
+Prefer Bootstrap.
+
+Explain every line.
+
+======================================================================
+
+# ERROR HANDLING
+
+Handle
+
+Duplicate Product
+
+Category Missing
+
+Invalid Image
+
+Image Upload Failure
+
+Database Save Failure
+
+Null Reference
+
+Product Not Found
+
+Stock Update Failure
+
+Generate user-friendly messages.
+
+======================================================================
+
+# TESTING
+
+Provide complete testing checklist.
+
+Examples
+
+Add Product
+
+Edit Product
+
+Delete Product
+
+Deactivate Product
+
+Search
+
+Filter
+
+Sorting
+
+Pagination
+
+Category Dropdown
+
+Image Upload
+
+Stock Update
+
+Price Update
+
+Validation
+
+======================================================================
+
+# FILE GENERATION FORMAT
+
+For every file
+
+Provide
+
+1. File Name
+
+2. Folder Location
+
+3. Purpose
+
+4. Tables Used
+
+5. Existing Files Modified
+
+6. Namespaces
+
+7. Complete Copy-Paste Ready Code
+
+8. Explanation
+
+9. Testing
+
+10. Common Errors
+
+11. Wait For Confirmation
+
+======================================================================
+
+# IMPORTANT DEVELOPMENT RULE
+
+Do not generate all files together.
+
+Generate only ONE file at a time.
+
+Wait for my approval.
+
+Never assume anything.
+
+Never skip explanations.
+
+Never skip file locations.
+
+Always keep the implementation compatible with
+
+Visual Studio 2015
+
+ASP.NET MVC 5
+
+Entity Framework Database First (.edmx)
+
+The implementation should be professional but beginner-friendly.
+
+If an advanced concept is required,
+
+first explain it,
+
+mark it as
+
+⚠ ADVANCED CONCEPT
+
+then implement it with detailed explanation.
+
+==============================================================================================================================================
+
+                        ADMIN MODULE
+                             PART 4
+
+      CUSTOMER MANAGEMENT + ORDER MANAGEMENT + COUPON MANAGEMENT
+
+========================================================================
+
+# MODULE OBJECTIVE
+
+You are continuing the development of the Admin Panel for the
+E-Grocery Store Management System.
+
+The following modules have already been completed:
+
+✔ Authentication
+✔ Admin Dashboard Planning
+✔ Category Management
+✔ Product Management
+
+Now continue with
+
+Customer Management
+
+Order Management
+
+Coupon Management
+
+Do NOT immediately generate code.
+
+First analyse the complete business requirement.
+
+Explain every business workflow before implementation.
+
+========================================================================
+
+# BUSINESS REQUIREMENT
+
+Customers are the primary users of the system.
+
+Orders generate business revenue.
+
+Coupons increase customer engagement.
+
+These three modules are interconnected.
+
+Every decision made by the Admin in these modules directly affects the Customer experience.
+
+Therefore, design these modules like a simplified ERP system suitable for a trainee-level implementation.
+
+========================================================================
+
+# CUSTOMER MANAGEMENT
+
+## BUSINESS PURPOSE
+
+The Admin should be able to monitor customer accounts but should not interfere with sensitive customer information unnecessarily.
+
+The Admin should be able to:
+
+✔ View all customers
+✔ Search customers
+✔ Filter customers
+✔ Sort customers
+✔ View customer profile
+✔ View customer order history
+✔ View customer addresses
+✔ View wishlist count
+✔ View registration date
+✔ Activate customer
+✔ Deactivate customer
+
+The Admin should NOT:
+
+❌ View plain-text passwords
+
+❌ Modify passwords directly
+
+❌ Modify security answers
+
+Explain why these restrictions are important.
+
+========================================================================
+
+# CUSTOMER LIST PAGE
+
+The page should contain:
+
+Page Title
+
+↓
+
+Breadcrumb
+
+↓
+
+Search Box
+
+↓
+
+Filters
+
+↓
+
+Bootstrap Table
+
+↓
+
+Pagination
+
+Columns:
+
+Customer Name
+
+Email
+
+Mobile Number
+
+Role
+
+Registration Date
+
+Status
+
+Total Orders
+
+Total Purchase Amount
+
+Actions
+
+========================================================================
+
+# CUSTOMER DETAILS PAGE
+
+When Admin clicks "View"
+
+Display
+
+Customer Information
+
+↓
+
+Saved Addresses
+
+↓
+
+Order History
+
+↓
+
+Wishlist Summary
+
+↓
+
+Account Status
+
+↓
+
+Registration Date
+
+Explain why this page is useful.
+
+========================================================================
+
+# CUSTOMER SEARCH
+
+Allow searching using
+
+First Name
+
+Last Name
+
+Email
+
+Mobile Number
+
+Search should ignore case sensitivity.
+
+Explain LINQ implementation.
+
+========================================================================
+
+# CUSTOMER FILTERS
+
+Filter by
+
+Status
+
+Registration Date
+
+Total Orders
+
+Role
+
+Explain business usefulness.
+
+========================================================================
+
+# CUSTOMER ACTIVATION
+
+Instead of deleting a customer,
+
+Allow
+
+Activate
+
+Deactivate
+
+If Deactivated
+
+Customer should not be able to login.
+
+Explain why soft deactivation is preferred.
+
+========================================================================
+
+# DATABASE TABLES USED
+
+Users
+
+Orders
+
+OrderDetails
+
+Wishlist
+
+Adresses
+
+Explain why each table is required.
+
+========================================================================
+
+# ORDER MANAGEMENT
+
+This is one of the most important Admin modules.
+
+Explain the complete Order Lifecycle.
+
+Customer places Order
+
+↓
+
+Payment Initiated
+
+↓
+
+Pending
+
+↓
+
+Confirmed
+
+↓
+
+Packed
+
+↓
+
+Shipped
+
+↓
+
+Delivered
+
+OR
+
+Cancelled
+
+Explain every stage.
+
+========================================================================
+
+# ORDER MANAGEMENT PAGE
+
+Display
+
+Order Number
+
+Customer Name
+
+Order Date
+
+Total Amount
+
+Payment Method
+
+Payment Status
+
+Order Status
+
+Actions
+
+========================================================================
+
+# ORDER DETAILS PAGE
+
+Display
+
+Order Information
+
+↓
+
+Customer Details
+
+↓
+
+Delivery Address
+
+↓
+
+Ordered Products
+
+↓
+
+Quantity
+
+↓
+
+Price
+
+↓
+
+Subtotal
+
+↓
+
+Total Amount
+
+↓
+
+Payment Method
+
+↓
+
+Payment Status
+
+↓
+
+Order Status
+
+========================================================================
+
+# ORDER STATUS MANAGEMENT
+
+Allow Admin to update Order Status.
+
+Business Rules
+
+Pending
+
+↓
+
+Confirmed
+
+↓
+
+Packed
+
+↓
+
+Shipped
+
+↓
+
+Delivered
+
+Cancelled can happen only before Shipped.
+
+Delivered Order cannot become Pending.
+
+Cancelled Order cannot become Delivered.
+
+Explain why.
+
+========================================================================
+
+# PAYMENT STATUS
+
+Allow viewing
+
+Pending
+
+Paid
+
+Failed
+
+Refunded (optional)
+
+Explain relationship between
+
+Payment Status
+
+and
+
+Order Status.
+
+========================================================================
+
+# ORDER SEARCH
+
+Allow searching using
+
+Order Number
+
+Customer Name
+
+Email
+
+========================================================================
+
+# ORDER FILTERS
+
+Filter using
+
+Order Status
+
+Payment Status
+
+Date Range
+
+Customer
+
+Payment Method
+
+========================================================================
+
+# ORDER SORTING
+
+Sort by
+
+Date
+
+Amount
+
+Customer
+
+Status
+
+========================================================================
+
+# ORDER VALIDATIONS
+
+Order must exist.
+
+Customer must exist.
+
+Order Status transition must be valid.
+
+Generate user-friendly error messages.
+
+========================================================================
+
+# COUPON MANAGEMENT
+
+Coupons help increase sales.
+
+The Admin should be able to
+
+View Coupons
+
+Add Coupon
+
+Edit Coupon
+
+Delete Coupon
+
+Activate
+
+Deactivate
+
+Search
+
+Pagination
+
+========================================================================
+
+# COUPON FORM
+
+Fields
+
+Coupon Code
+
+Discount Type
+
+Percentage / Fixed Amount
+
+Discount Value
+
+Expiry Date
+
+Status
+
+========================================================================
+
+# COUPON VALIDATIONS
+
+Coupon Code Required
+
+Coupon Code Unique
+
+Discount Value Positive
+
+Expiry Date must be in future
+
+Status Required
+
+Explain every validation.
+
+========================================================================
+
+# COUPON BUSINESS RULES
+
+Expired coupons
+
+↓
+
+Automatically Invalid
+
+Inactive coupons
+
+↓
+
+Cannot be applied
+
+Duplicate coupon codes
+
+↓
+
+Not allowed
+
+Explain why.
+
+========================================================================
+
+# COUPON SEARCH
+
+Search by
+
+Coupon Code
+
+Discount Type
+
+Status
+
+========================================================================
+
+# COUPON FILTERS
+
+Status
+
+Expiry
+
+Discount Type
+
+========================================================================
+
+# ENTITY FRAMEWORK
+
+Explain every method before using it.
+
+ToList()
+
+Find()
+
+Where()
+
+Any()
+
+OrderBy()
+
+FirstOrDefault()
+
+Include()
+
+Skip()
+
+Take()
+
+Add()
+
+SaveChanges()
+
+Update()
+
+Remove()
+
+Explain
+
+Purpose
+
+SQL Equivalent
+
+Expected Output
+
+========================================================================
+
+# CONTROLLERS
+
+Before generating any Controller,
+
+Explain
+
+Why it is required.
+
+Which database tables it accesses.
+
+Which Views it controls.
+
+Expected Controllers
+
+CustomerController
+
+OrderController
+
+CouponController
+
+========================================================================
+
+# VIEWS
+
+Generate
+
+Manage Customers
+
+Customer Details
+
+Manage Orders
+
+Order Details
+
+Manage Coupons
+
+Add Coupon
+
+Edit Coupon
+
+Use
+
+Bootstrap
+
+Admin Layout
+
+Strongly Typed Views
+
+========================================================================
+
+# VIEWMODELS
+
+Use Entity Framework Models wherever possible.
+
+If a ViewModel is required,
+
+Explain
+
+Why
+
+Properties
+
+Usage
+
+Then generate.
+
+========================================================================
+
+# EXISTING FILE MODIFICATIONS
+
+Check
+
+_Layout.cshtml
+
+BundleConfig.cs
+
+RouteConfig.cs
+
+Scripts
+
+CSS
+
+If any modification is required,
+
+mention
+
+File Name
+
+Reason
+
+Old Code
+
+New Code
+
+Paste Location
+
+Never silently modify files.
+
+========================================================================
+
+# ERROR HANDLING
+
+Possible Errors
+
+Customer Not Found
+
+Order Not Found
+
+Coupon Already Exists
+
+Invalid Status Transition
+
+Database Save Failure
+
+Null Reference
+
+Explain
+
+Cause
+
+Solution
+
+User-friendly Message
+
+========================================================================
+
+# TESTING
+
+Generate complete testing checklist.
+
+Customer Search
+
+Customer Activation
+
+Customer Details
+
+Order Search
+
+Order Filters
+
+Order Status Update
+
+Coupon Creation
+
+Coupon Validation
+
+Coupon Expiry
+
+Pagination
+
+Sorting
+
+========================================================================
+
+# FILE GENERATION FORMAT
+
+For every file
+
+Provide
+
+1. File Name
+
+2. Folder Location
+
+3. Purpose
+
+4. Database Tables Used
+
+5. Existing Files Modified
+
+6. Namespaces
+
+7. Complete Copy-Paste Ready Code
+
+8. Explanation
+
+9. Testing
+
+10. Common Errors
+
+11. Wait for my confirmation before generating the next file.
+
+========================================================================
+
+# IMPORTANT DEVELOPMENT RULE
+
+Generate ONLY one file at a time.
+
+Wait for my approval before moving to the next file.
+
+Keep the implementation
+
+✔ Beginner-friendly
+
+✔ Professional
+
+✔ Visual Studio 2015 compatible
+
+✔ ASP.NET MVC 5 compatible
+
+✔ Entity Framework Database First (.edmx) compatible
+
+If an advanced concept is required,
+
+first explain it,
+
+mark it as
+
+⚠ ADVANCED CONCEPT
+
+then implement it with detailed explanation.
+
+================================================================================================================================================
+
+                        ADMIN MODULE
+                             PART 5
+
+       REPORTS • PROFILE • PROJECT STRUCTURE • INTEGRATION
+
+========================================================================
+
+# MODULE OBJECTIVE
+
+You are continuing the development of the
+E-Grocery Store Management System.
+
+The following modules have already been completed.
+
+✔ Authentication
+
+✔ Dashboard Planning
+
+✔ Category Module
+
+✔ Product Module
+
+✔ Customer Module
+
+✔ Order Module
+
+✔ Coupon Module
+
+Now continue with
+
+Reports
+
+Admin Profile
+
+Project Integration
+
+Reusable Components
+
+Layout
+
+CSS
+
+JavaScript
+
+Helper Classes
+
+Existing File Modifications
+
+This part should integrate the entire Admin Panel into one professional project.
+
+========================================================================
+
+# BUSINESS REQUIREMENT
+
+An Admin Panel is not just a collection of CRUD pages.
+
+Every module should work together.
+
+The project should feel like one complete software application.
+
+The code should be
+
+Reusable
+
+Maintainable
+
+Readable
+
+Scalable
+
+Beginner Friendly
+
+Explain why project integration is important.
+
+========================================================================
+
+# REPORTS MODULE
+
+Reports help the Admin understand business performance.
+
+The implementation should remain beginner-friendly.
+
+Avoid advanced analytics.
+
+Generate simple but useful reports.
+
+========================================================================
+
+# SALES REPORT
+
+Display
+
+Total Revenue
+
+Today's Revenue
+
+Monthly Revenue
+
+Yearly Revenue
+
+Number of Orders
+
+Average Order Value
+
+Explain how each value is calculated.
+
+========================================================================
+
+# PRODUCT REPORT
+
+Display
+
+Top Selling Products
+
+Lowest Selling Products
+
+Out Of Stock Products
+
+Low Stock Products
+
+Inactive Products
+
+Explain why each report is useful.
+
+========================================================================
+
+# CATEGORY REPORT
+
+Display
+
+Category Name
+
+Total Products
+
+Products Available
+
+Products Out Of Stock
+
+Explain business importance.
+
+========================================================================
+
+# CUSTOMER REPORT
+
+Display
+
+Total Customers
+
+Active Customers
+
+Inactive Customers
+
+Latest Registered Customers
+
+Top Customers By Purchase
+
+Explain why.
+
+========================================================================
+
+# ORDER REPORT
+
+Display
+
+Pending Orders
+
+Confirmed Orders
+
+Packed Orders
+
+Shipped Orders
+
+Delivered Orders
+
+Cancelled Orders
+
+Monthly Orders
+
+Explain Order Analysis.
+
+========================================================================
+
+# DASHBOARD INTEGRATION
+
+Reports should also provide summary values for Dashboard Cards.
+
+Explain how Dashboard and Reports are connected.
+
+========================================================================
+
+# CHARTS
+
+Keep Charts beginner-friendly.
+
+If a Chart Library is required,
+
+Explain
+
+Why
+
+Installation
+
+Files Required
+
+Integration Steps
+
+Generate
+
+Sales Chart
+
+Orders Chart
+
+Category Distribution
+
+Avoid complex JavaScript.
+
+========================================================================
+
+# ADMIN PROFILE
+
+Admin should be able to
+
+View Profile
+
+Edit Profile
+
+Change Password
+
+View Email
+
+View Mobile Number
+
+Logout
+
+Password must always remain hashed.
+
+Explain Password Update Flow.
+
+========================================================================
+
+# CHANGE PASSWORD
+
+Old Password
+
+↓
+
+Verify Hash
+
+↓
+
+Enter New Password
+
+↓
+
+Confirm Password
+
+↓
+
+Hash New Password
+
+↓
+
+Update Database
+
+Explain every step.
+
+========================================================================
+
+# REUSABLE COMPONENTS
+
+Generate reusable components wherever possible.
+
+Examples
+
+Sidebar
+
+Navbar
+
+Footer
+
+Breadcrumb
+
+Alert Messages
+
+Success Messages
+
+Error Messages
+
+Confirmation Dialog
+
+Bootstrap Cards
+
+Bootstrap Tables
+
+Badges
+
+Explain why reusable components improve maintainability.
+
+========================================================================
+
+# PARTIAL VIEWS
+
+Whenever suitable,
+
+Use Partial Views.
+
+Examples
+
+Sidebar
+
+Navbar
+
+Footer
+
+Dashboard Cards
+
+Alert Messages
+
+Explain
+
+What Partial Views are.
+
+Why they are useful.
+
+If Partial Views are unnecessary for any section,
+
+explicitly mention
+
+"No Partial View Required."
+
+========================================================================
+
+# ADMIN LAYOUT
+
+Generate a separate
+
+_AdminLayout.cshtml
+
+The Admin Layout should contain
+
+Sidebar
+
+Navbar
+
+Footer
+
+Bootstrap
+
+CSS
+
+JavaScript
+
+RenderBody()
+
+RenderSection()
+
+Explain
+
+Purpose of Layout
+
+How Views inherit Layout
+
+========================================================================
+
+# PROJECT FOLDER STRUCTURE
+
+Explain the folder structure.
+
+Controllers
+
+Models
+
+ViewModels
+
+Views
+
+Views/Admin
+
+Views/Shared
+
+Helpers
+
+Content
+
+Content/CSS
+
+Content/Images
+
+Scripts
+
+Scripts/Custom
+
+Explain why each folder exists.
+
+========================================================================
+
+# CSS STRUCTURE
+
+Generate separate CSS files.
+
+Admin.css
+
+Dashboard.css
+
+Category.css
+
+Product.css
+
+Customer.css
+
+Order.css
+
+Coupon.css
+
+Reports.css
+
+Responsive.css
+
+Avoid putting all CSS in one file.
+
+Avoid inline CSS.
+
+Explain modular CSS.
+
+========================================================================
+
+# JAVASCRIPT STRUCTURE
+
+Generate JavaScript only where required.
+
+Separate files.
+
+Dashboard.js
+
+Category.js
+
+Product.js
+
+Customer.js
+
+Order.js
+
+Coupon.js
+
+Reports.js
+
+Explain every script.
+
+Avoid unnecessary jQuery.
+
+========================================================================
+
+# HELPER CLASSES
+
+Reuse existing Helpers whenever possible.
+
+Generate Helper Classes only if necessary.
+
+Examples
+
+ImageHelper
+
+SessionHelper
+
+ValidationHelper
+
+PasswordHelper
+
+SearchHelper
+
+Explain
+
+Purpose
+
+Methods
+
+Controllers using them
+
+Folder Location
+
+========================================================================
+
+# EXISTING FILE MODIFICATIONS
+
+This is EXTREMELY IMPORTANT.
+
+Whenever an existing file requires modification,
+
+even if only one line,
+
+explicitly mention
+
+File Name
+
+Folder
+
+Purpose
+
+Reason
+
+Old Code
+
+New Code
+
+Exact Paste Location
+
+Never silently modify any existing file.
+
+========================================================================
+
+# FILES TO VERIFY
+
+Before generating code,
+
+check whether modifications are required in
+
+_Web.config
+
+Web.config
+
+RouteConfig.cs
+
+BundleConfig.cs
+
+FilterConfig.cs
+
+Global.asax
+
+_ViewStart.cshtml
+
+Admin Layout
+
+Shared Layout
+
+Site.css
+
+Bundle Registration
+
+Scripts
+
+Namespaces
+
+If modification is NOT required,
+
+explicitly mention
+
+"No modification required."
+
+========================================================================
+
+# NAMESPACES
+
+Before every file,
+
+mention
+
+Required Namespaces
+
+Why each namespace is required.
+
+========================================================================
+
+# NUGET PACKAGES
+
+If any NuGet Package is required,
+
+mention
+
+Package Name
+
+Purpose
+
+Version compatible with
+
+Visual Studio 2015
+
+ASP.NET MVC 5
+
+Entity Framework Database First
+
+Explain installation.
+
+If no package is required,
+
+mention
+
+"No additional NuGet Package required."
+
+========================================================================
+
+# PROJECT INTEGRATION
+
+Explain how all modules are connected.
+
+Authentication
+
+↓
+
+Dashboard
+
+↓
+
+Categories
+
+↓
+
+Products
+
+↓
+
+Customers
+
+↓
+
+Orders
+
+↓
+
+Coupons
+
+↓
+
+Reports
+
+↓
+
+Profile
+
+↓
+
+Logout
+
+Explain every navigation.
+
+========================================================================
+
+# EXECUTION FLOW
+
+For every Admin feature,
+
+generate an execution flow.
+
+Example
+
+Admin Clicks Add Product
+
+↓
+
+Request reaches ProductController
+
+↓
+
+Validation
+
+↓
+
+Image Upload
+
+↓
+
+Entity Framework
+
+↓
+
+SaveChanges()
+
+↓
+
+Database Updated
+
+↓
+
+Success Message
+
+↓
+
+Redirect
+
+Explain every step.
+
+========================================================================
+
+# RESPONSIVE DESIGN
+
+The entire Admin Panel must work correctly on
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Explain Bootstrap Grid usage.
+
+========================================================================
+
+# TESTING
+
+Generate a testing checklist for
+
+Reports
+
+Profile
+
+Layout
+
+Sidebar
+
+Navigation
+
+Charts
+
+Responsive Design
+
+Reusable Components
+
+========================================================================
+
+# FILE GENERATION FORMAT
+
+For every file
+
+Provide
+
+1. File Name
+
+2. Folder Location
+
+3. Purpose
+
+4. Dependencies
+
+5. Existing Files Modified
+
+6. Namespaces
+
+7. Complete Copy-Paste Ready Code
+
+8. Explanation
+
+9. Testing
+
+10. Common Errors
+
+11. Wait For Confirmation
+
+========================================================================
+
+# IMPORTANT DEVELOPMENT RULE
+
+Generate ONLY one file at a time.
+
+Wait for my confirmation.
+
+Never skip explanations.
+
+Never skip folder locations.
+
+Never skip testing.
+
+Never skip integration.
+
+Always ensure the generated code is compatible with
+
+Visual Studio 2015
+
+ASP.NET MVC 5
+
+Entity Framework Database First (.edmx)
+
+Bootstrap
+
+SQL Server
+
+================================================================================================================================================
+
+                    ADMIN MODULE - PART 6
+
+ PROFESSIONAL STANDARDS • ANALYTICS • SECURITY
+ COMPLETE PROJECT INTEGRATION
+ FINAL DEVELOPMENT GUIDELINES
+
+========================================================================
+
+PROJECT OBJECTIVE
+
+This is the FINAL part of the Admin Module.
+
+This prompt contains all the remaining project requirements,
+professional development standards,
+security,
+statistics,
+testing,
+project integration,
+deployment guidelines,
+and final business rules.
+
+The implementation must remain
+
+✔ Beginner Friendly
+
+✔ ASP.NET MVC 5
+
+✔ Entity Framework Database First (.edmx)
+
+✔ SQL Server
+
+✔ Bootstrap
+
+✔ Visual Studio 2015 Compatible
+
+Never redesign my existing database.
+
+========================================================================
+
+ADMIN ROLE MANAGEMENT
+
+This is one of the most important requirements.
+
+Initially
+
+ONLY ONE ADMIN
+
+should be hardcoded.
+
+The first Admin should already exist inside the Users table.
+
+Role = Admin
+
+After logging in,
+
+that Admin should have complete authority to create new Admin accounts.
+
+Admin should be able to
+
+View Admins
+
+Add Admin
+
+Edit Admin
+
+Deactivate Admin
+
+Activate Admin
+
+Reset Password
+
+Search Admin
+
+Filter Admin
+
+Sort Admin
+
+Pagination
+
+========================================================================
+
+NEW ADMIN CREATION
+
+Admin clicks
+
+Create Admin
+
+↓
+
+Fill Form
+
+First Name
+
+Last Name
+
+Email
+
+Mobile Number
+
+Password
+
+Confirm Password
+
+Security Question
+
+Security Answer
+
+Role
+
+(Default Selected = Admin)
+
+↓
+
+Validate
+
+↓
+
+Hash Password
+
+↓
+
+Hash Security Answer
+
+↓
+
+Save into Users table
+
+Role = Admin
+
+↓
+
+Display Success Message
+
+Explain every step.
+
+========================================================================
+
+ADMIN BUSINESS RULES
+
+Admin cannot delete himself.
+
+Admin cannot deactivate himself.
+
+Admin cannot remove the last active Admin.
+
+Duplicate Email not allowed.
+
+Duplicate Mobile Number not allowed.
+
+Password must remain hashed.
+
+Security Answer must remain hashed.
+
+Explain every validation.
+
+========================================================================
+
+PRODUCT STATUS MANAGEMENT
+
+Apart from Product CRUD,
+
+Admin should also control Product Availability.
+
+Every Product should have Status.
+
+Available
+
+Out Of Stock
+
+Coming Soon (Optional)
+
+Discontinued
+
+Inactive
+
+Business Rules
+
+StockQuantity = 0
+
+↓
+
+Automatically show
+
+Out Of Stock
+
+Admin can manually make
+
+Inactive
+
+or
+
+Discontinued.
+
+Discontinued products
+
+Cannot be purchased.
+
+Explain every business rule.
+
+========================================================================
+
+LOW STOCK MANAGEMENT
+
+If StockQuantity < 10
+
+↓
+
+Display Yellow Warning
+
+If StockQuantity = 0
+
+↓
+
+Display Red Badge
+
+Display these alerts
+
+Dashboard
+
+Product List
+
+Reports
+
+Statistics
+
+========================================================================
+
+ORDER LIFECYCLE MANAGEMENT
+
+Admin has complete authority over Orders.
+
+Every Order should move through proper stages.
+
+Pending
+
+↓
+
+Confirmed
+
+↓
+
+Packed
+
+↓
+
+Shipped
+
+↓
+
+Delivered
+
+Cancelled
+
+Business Rules
+
+Pending
+
+↓
+
+Confirmed
+
+↓
+
+Packed
+
+↓
+
+Shipped
+
+↓
+
+Delivered
+
+Cancelled
+
+can occur only
+
+before Shipped.
+
+Delivered Order
+
+cannot become
+
+Pending.
+
+Cancelled Order
+
+cannot become
+
+Delivered.
+
+Generate validation.
+
+Generate confirmation dialog.
+
+Generate success notification.
+
+Explain every business rule.
+
+========================================================================
+
+ORDER STATUS FILTERS
+
+Generate filters
+
+Pending
+
+Confirmed
+
+Packed
+
+Shipped
+
+Delivered
+
+Cancelled
+
+Payment Pending
+
+Payment Paid
+
+Today's Orders
+
+Monthly Orders
+
+========================================================================
+
+ORDER DETAILS PAGE
+
+Display
+
+Customer Details
+
+Delivery Address
+
+Products
+
+Quantity
+
+Subtotal
+
+Discount
+
+Coupon
+
+Grand Total
+
+Payment Method
+
+Payment Status
+
+Order Status
+
+Admin Notes (Optional)
+
+========================================================================
+
+CATEGORY WISE PRODUCT MANAGEMENT
+
+Each Category should display
+
+Total Products
+
+Available Products
+
+Out Of Stock Products
+
+Inactive Products
+
+Discontinued Products
+
+Generate statistics.
+
+========================================================================
+
+PRODUCT ANALYTICS
+
+Generate
+
+Top Selling Products
+
+Least Selling Products
+
+Highest Rated Products
+
+Lowest Rated Products
+
+Most Wishlisted Products
+
+Products Never Purchased
+
+Recently Added Products
+
+Low Stock Products
+
+Out Of Stock Products
+
+Explain every calculation.
+
+========================================================================
+
+CUSTOMER ANALYTICS
+
+Generate
+
+Newest Customers
+
+Most Active Customers
+
+Customers With Highest Purchase
+
+Customers With Largest Wishlist
+
+Customers With Largest Cart
+
+Customers Without Orders
+
+Repeat Customers
+
+Inactive Customers
+
+========================================================================
+
+ORDER ANALYTICS
+
+Generate
+
+Today's Orders
+
+Weekly Orders
+
+Monthly Orders
+
+Delivered Orders
+
+Cancelled Orders
+
+Pending Orders
+
+Average Order Value
+
+Highest Order
+
+Lowest Order
+
+Orders By Payment Method
+
+Orders By Status
+
+========================================================================
+
+REVENUE ANALYTICS
+
+Generate
+
+Today's Revenue
+
+Weekly Revenue
+
+Monthly Revenue
+
+Yearly Revenue
+
+Revenue By Category
+
+Revenue By Product
+
+Highest Revenue Category
+
+Lowest Revenue Category
+
+========================================================================
+
+COUPON ANALYTICS
+
+Generate
+
+Active Coupons
+
+Expired Coupons
+
+Most Used Coupon
+
+Unused Coupons
+
+Coupons Expiring Soon
+
+========================================================================
+
+DASHBOARD KPI CARDS
+
+Dashboard should contain
+
+Total Customers
+
+Total Admins
+
+Total Categories
+
+Total Products
+
+Available Products
+
+Low Stock Products
+
+Out Of Stock Products
+
+Orders Today
+
+Pending Orders
+
+Delivered Orders
+
+Cancelled Orders
+
+Revenue Today
+
+Revenue This Month
+
+Revenue Overall
+
+Active Coupons
+
+Expired Coupons
+
+Display all values dynamically.
+
+========================================================================
+
+CHARTS
+
+Generate charts for
+
+Monthly Sales
+
+Monthly Orders
+
+Customer Registrations
+
+Top Categories
+
+Top Products
+
+Revenue Trend
+
+Order Status
+
+Stock Distribution
+
+Coupon Usage
+
+Explain every chart.
+
+Keep JavaScript beginner friendly.
+
+========================================================================
+
+SEARCH
+
+Every Master should support
+
+Search
+
+Filter
+
+Sorting
+
+Pagination
+
+Modules
+
+Admin
+
+Customer
+
+Category
+
+Product
+
+Coupon
+
+Order
+
+========================================================================
+
+VALIDATION
+
+Generate
+
+Client Side Validation
+
+Server Side Validation
+
+Duplicate Validation
+
+Null Validation
+
+Image Validation
+
+Email Validation
+
+Mobile Validation
+
+Price Validation
+
+Stock Validation
+
+Coupon Validation
+
+========================================================================
+
+SUCCESS & ERROR NOTIFICATIONS
+
+Generate Bootstrap Alerts or Toast Messages
+
+Successfully Added
+
+Successfully Updated
+
+Successfully Deleted
+
+Status Changed
+
+Order Updated
+
+Coupon Applied
+
+Coupon Expired
+
+Invalid Login
+
+Unauthorized Access
+
+Validation Failed
+
+========================================================================
+
+DELETE CONFIRMATION
+
+Before deleting
+
+Category
+
+Coupon
+
+Product
+
+Admin
+
+Generate confirmation popup.
+
+========================================================================
+
+SESSION MANAGEMENT
+
+Protect every Admin page.
+
+Check Session.
+
+Check Role.
+
+Prevent Direct URL Access.
+
+If Session Expired
+
+↓
+
+Redirect Login
+
+Display appropriate message.
+
+========================================================================
+
+SECURITY
+
+Passwords
+
+Always Hashed
+
+Security Answers
+
+Always Hashed
+
+Prevent SQL Injection
+
+Prevent XSS
+
+Prevent Unauthorized Access
+
+Never expose Passwords.
+
+========================================================================
+
+FILE UPLOAD
+
+If Product Image upload exists
+
+Validate
+
+File Size
+
+Extension
+
+Duplicate Name
+
+Generate beginner friendly implementation.
+
+========================================================================
+
+RESPONSIVE DESIGN
+
+Entire Admin Panel
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Bootstrap Responsive Grid
+
+========================================================================
+
+REPORTS
+
+Generate
+
+Sales Report
+
+Customer Report
+
+Product Report
+
+Category Report
+
+Coupon Report
+
+Order Report
+
+Display
+
+Tables
+
+Charts
+
+Statistics
+
+========================================================================
+
+OPTIONAL FEATURES
+
+If possible,
+
+also generate
+
+Export Excel
+
+Export PDF
+
+Audit Trail
+
+Activity Log
+
+Explain whether these are beginner-friendly or advanced.
+
+If advanced,
+
+mark them as
+
+⚠ ADVANCED CONCEPT
+
+========================================================================
+
+ENTITY FRAMEWORK
+
+Before every EF method,
+
+Explain
+
+Purpose
+
+Syntax
+
+SQL Equivalent
+
+Expected Output
+
+Methods
+
+Find()
+
+Where()
+
+Any()
+
+Include()
+
+OrderBy()
+
+FirstOrDefault()
+
+Skip()
+
+Take()
+
+Add()
+
+Remove()
+
+SaveChanges()
+
+========================================================================
+
+FILE GENERATION RULES
+
+For EVERY file,
+
+mention
+
+File Name
+
+Folder
+
+Purpose
+
+Database Tables Used
+
+Namespaces
+
+Dependencies
+
+Existing Files Modified
+
+Old Code
+
+New Code
+
+Paste Location
+
+Complete Copy-Paste Ready Code
+
+Explanation
+
+Testing
+
+Common Errors
+
+========================================================================
+
+PROJECT INTEGRATION
+
+After completing all modules,
+
+provide
+
+Complete Folder Structure
+
+Controllers
+
+Views
+
+ViewModels
+
+Helpers
+
+CSS Files
+
+JavaScript Files
+
+Images Folder
+
+Bundle Changes
+
+Layout Changes
+
+Web.config Changes
+
+RouteConfig Changes
+
+FilterConfig Changes
+
+Namespaces
+
+NuGet Packages
+
+========================================================================
+
+TESTING CHECKLIST
+
+Generate testing checklist for
+
+Authentication
+
+Admin Management
+
+Category Management
+
+Product Management
+
+Customer Management
+
+Order Management
+
+Coupon Management
+
+Reports
+
+Statistics
+
+Charts
+
+Responsive UI
+
+Role Based Access
+
+Search
+
+Sorting
+
+Filtering
+
+Pagination
+
+Session Timeout
+
+Security
+
+Validation
+
+========================================================================
+
+IMPORTANT DEVELOPMENT RULES
+
+1.
+
+Generate ONLY ONE FILE AT A TIME.
+
+Wait for my confirmation.
+
+2.
+
+Never skip explanation.
+
+3.
+
+Never skip folder location.
+
+4.
+
+Never silently modify existing files.
+
+Always mention
+
+Old Code
+
+New Code
+
+Exact Paste Location.
+
+5.
+
+If any advanced concept is required,
+
+first explain it,
+
+mark it as
+
+⚠ ADVANCED CONCEPT
+
+then generate.
+
+6.
+
+Keep every implementation beginner friendly.
+
+Do not use unnecessarily complex architecture.
+
+If a simpler approach exists, prefer it.
+
+7.
+
+Ensure every generated file is compatible with
+
+ASP.NET MVC 5
+
+Visual Studio 2015
+
+Entity Framework Database First (.edmx)
+
+SQL Server
+
+Bootstrap
+
+========================================================================
+
+FINAL PROJECT DELIVERABLE
+
+After the entire Admin module is complete,
+
+generate
+
+Complete project documentation.
+
+Execution flow of every module.
+
+Database table usage.
+
+Controller flow.
+
+View flow.
+
+Navigation flow.
+
+Business logic explanation.
+
+Deployment checklist.
+
+Common debugging guide.
+
+Future enhancements.
+
+Project presentation points.
+
+Interview questions related to the project.
+
+================================================================================================================================================
+
+                ADDITIONAL BUSINESS LOGIC
+        (MANDATORY IMPLEMENTATION REQUIREMENTS)
+
+========================================================================
+
+Before generating any code, analyse these business rules carefully.
+These are mandatory requirements and should be followed consistently
+throughout the entire project.
+
+Do not make assumptions.
+If any rule conflicts with another module, explain the conflict before
+writing code.
+
+========================================================================
+1. COMPLETE CART TO ORDER EXECUTION FLOW
+
+The complete purchasing flow should be implemented as follows:
+
+Customer Login
+
+↓
+
+Browse Products
+
+↓
+
+Search / Filter / Sort Products
+
+↓
+
+View Product Details
+
+↓
+
+Add Product to Cart
+
+↓
+
+Increase / Decrease Quantity
+
+↓
+
+Proceed to Checkout
+
+↓
+
+Select Existing Address
+OR
+Add New Address
+
+↓
+
+Apply Coupon (Optional)
+
+↓
+
+Display Final Order Summary
+
+↓
+
+Place Order
+
+↓
+
+Create Order
+
+↓
+
+Create OrderDetails
+
+↓
+
+Reduce Product Stock
+
+↓
+
+Clear Cart
+
+↓
+
+Order Status = Pending
+
+Explain every step before implementation.
+
+========================================================================
+2. STOCK MANAGEMENT RULES
+
+Adding a product to Cart must NOT reduce stock.
+
+Stock should reduce ONLY after the Order is successfully placed.
+
+If the Order is cancelled before delivery,
+
+the stock should automatically be restored.
+
+Explain this business logic before implementation.
+
+========================================================================
+3. PRODUCT DELETION RULES
+
+Products should never be permanently deleted if they are already used
+in Orders.
+
+Instead,
+
+mark the Product as
+
+Inactive
+
+or
+
+Discontinued.
+
+Explain why this is preferred in real-world applications.
+
+========================================================================
+4. CATEGORY DELETION RULES
+
+A Category cannot be deleted if Products exist inside it.
+
+Admin should first
+
+Move Products
+
+OR
+
+Deactivate Products
+
+before deleting the Category.
+
+Generate proper validation and user-friendly error messages.
+
+========================================================================
+5. COUPON BUSINESS RULES
+
+Implement the following rules:
+
+Coupon must not be expired.
+
+Inactive Coupon cannot be used.
+
+Coupon Code must be unique.
+
+One customer should not be able to use the same coupon repeatedly
+unless explicitly allowed.
+
+If a Coupon is expired,
+
+display it as Expired / Disabled.
+
+Do not remove historical coupon records.
+
+========================================================================
+6. ADDRESS MANAGEMENT RULES
+
+A Customer can
+
+Add Address
+
+Edit Address
+
+Delete Address
+
+Set Default Address
+
+Only ONE Default Address should exist for one Customer.
+
+If another Address becomes Default,
+
+the previous Default Address should automatically become non-default.
+
+Do not allow deletion of the only Default Address unless another
+address is selected as Default.
+
+========================================================================
+7. WISHLIST RULES
+
+A Customer cannot add the same Product multiple times.
+
+If the Product already exists in Wishlist,
+
+display an appropriate message.
+
+Use UserId + ProductId as the uniqueness check.
+
+========================================================================
+8. CART RULES
+
+A Customer cannot have duplicate entries of the same Product in Cart.
+
+If the Product already exists,
+
+increase the Quantity instead of inserting another row.
+
+Quantity cannot become less than one.
+
+Generate Increase Quantity and Decrease Quantity functionality.
+
+========================================================================
+9. PRODUCT RATING RULES
+
+Only Customers who have successfully purchased a Product should be
+allowed to rate it.
+
+Do not allow ratings from users who never purchased the Product.
+
+The Product AverageRating should automatically update whenever a new
+rating is submitted.
+
+Explain the calculation logic.
+
+========================================================================
+10. PRODUCT IMAGE RULES
+
+Use the existing ImagePath field.
+
+Each Product should have only ONE image.
+
+Validate
+
+Allowed Extensions
+
+Maximum File Size
+
+Invalid File Types
+
+If image is missing,
+
+display a Default Product Image.
+
+========================================================================
+11. SEARCH RULES
+
+All search functionality should support partial matching.
+
+Example:
+
+Searching
+
+Rice
+
+should also return
+
+Basmati Rice
+
+Brown Rice
+
+Organic Rice
+
+Search should ignore case sensitivity.
+
+========================================================================
+12. SORTING RULES
+
+Implement sorting wherever applicable.
+
+Price
+
+Name
+
+Newest
+
+Oldest
+
+Highest Rating
+
+Lowest Rating
+
+Popularity
+
+========================================================================
+13. PAGINATION RULES
+
+Every master page should support pagination.
+
+Provide options like
+
+5 Records
+
+10 Records
+
+20 Records
+
+Maintain current search, sorting and filtering after page changes.
+
+========================================================================
+14. DASHBOARD AUTO UPDATE
+
+Dashboard statistics should always reflect the latest database values.
+
+Whenever
+
+Customer Registers
+
+Product Added
+
+Order Placed
+
+Coupon Added
+
+Order Cancelled
+
+Stock Updated
+
+the Dashboard should automatically display updated statistics after
+page refresh.
+
+Never hardcode dashboard values.
+
+========================================================================
+15. ADMIN PROFILE
+
+Every Admin should have
+
+View Profile
+
+Edit Profile
+
+Change Password
+
+Logout
+
+Password should always remain hashed.
+
+========================================================================
+16. SESSION MANAGEMENT
+
+Protect every Admin page.
+
+If Session expires,
+
+redirect to Login.
+
+Prevent browser Back Button access after Logout.
+
+Prevent direct URL access without authentication.
+
+========================================================================
+17. DUPLICATE VALIDATION
+
+Generate duplicate validation for
+
+Email
+
+Mobile Number
+
+Category Name
+
+Coupon Code
+
+Wishlist
+
+Cart
+
+Display meaningful validation messages.
+
+========================================================================
+18. STATUS COLOR CODING
+
+Use consistent Bootstrap badges.
+
+Pending = Yellow
+
+Confirmed = Primary
+
+Packed = Info
+
+Shipped = Dark
+
+Delivered = Success
+
+Cancelled = Danger
+
+Out Of Stock = Danger
+
+Low Stock = Warning
+
+Available = Success
+
+Inactive = Secondary
+
+========================================================================
+19. PROFESSIONAL ORDER NUMBER
+
+Instead of displaying
+
+1
+
+2
+
+3
+
+Generate professional order numbers such as
+
+ORD10001
+
+ORD10002
+
+ORD10003
+
+Explain the generation logic.
+
+========================================================================
+20. DASHBOARD NOTIFICATIONS
+
+Generate notification cards for
+
+Low Stock Products
+
+New Orders
+
+New Customers
+
+Expired Coupons
+
+Pending Deliveries
+
+Cancelled Orders
+
+These notifications should update dynamically.
+
+========================================================================
+21. EMPTY DATA HANDLING
+
+If any table contains no records,
+
+the application should never crash.
+
+Instead display meaningful messages such as
+
+"No Products Available"
+
+"No Orders Found"
+
+"No Customers Registered"
+
+"No Coupons Available"
+
+========================================================================
+22. REPORTS & STATISTICS
+
+Every report should be generated dynamically from the database.
+
+Never hardcode statistical values.
+
+Generate tables first and then graphs/charts.
+
+Explain how every statistic is calculated.
+
+========================================================================
+23. BEGINNER FRIENDLY DEVELOPMENT RULE
+
+Throughout the project,
+
+prefer simple and readable implementations.
+
+Do not use unnecessarily advanced design patterns.
+
+If an advanced concept is genuinely required,
+
+first explain
+
+Why it is needed.
+
+Mark it as
+
+⚠ ADVANCED CONCEPT
+
+Then implement it.
+
+========================================================================
+24. FINAL PROJECT DOCUMENTATION
+
+After completing the entire project,
+
+generate
+
+Complete Project Architecture
+
+Execution Flow of Every Module
+
+Database Relationship Explanation
+
+Folder Structure
+
+Controller Flow
+
+Navigation Flow
+
+Business Logic Documentation
+
+Testing Checklist
+
+Deployment Checklist
+
+Presentation Flow
+
+Possible Interview Questions
+
+Future Scope
+
+Common Debugging Guide
+
+Do not leave any module undocumented.
+
+================================================================================================================================================
+
+                ADDITIONAL BUSINESS LOGIC
+        (MANDATORY IMPLEMENTATION REQUIREMENTS)
+
+========================================================================
+
+Before generating any code, analyse these business rules carefully.
+These are mandatory requirements and should be followed consistently
+throughout the entire project.
+
+Do not make assumptions.
+If any rule conflicts with another module, explain the conflict before
+writing code.
+
+========================================================================
+1. COMPLETE CART TO ORDER EXECUTION FLOW
+
+The complete purchasing flow should be implemented as follows:
+
+Customer Login
+
+↓
+
+Browse Products
+
+↓
+
+Search / Filter / Sort Products
+
+↓
+
+View Product Details
+
+↓
+
+Add Product to Cart
+
+↓
+
+Increase / Decrease Quantity
+
+↓
+
+Proceed to Checkout
+
+↓
+
+Select Existing Address
+OR
+Add New Address
+
+↓
+
+Apply Coupon (Optional)
+
+↓
+
+Display Final Order Summary
+
+↓
+
+Place Order
+
+↓
+
+Create Order
+
+↓
+
+Create OrderDetails
+
+↓
+
+Reduce Product Stock
+
+↓
+
+Clear Cart
+
+↓
+
+Order Status = Pending
+
+Explain every step before implementation.
+
+========================================================================
+2. STOCK MANAGEMENT RULES
+
+Adding a product to Cart must NOT reduce stock.
+
+Stock should reduce ONLY after the Order is successfully placed.
+
+If the Order is cancelled before delivery,
+
+the stock should automatically be restored.
+
+Explain this business logic before implementation.
+
+========================================================================
+3. PRODUCT DELETION RULES
+
+Products should never be permanently deleted if they are already used
+in Orders.
+
+Instead,
+
+mark the Product as
+
+Inactive
+
+or
+
+Discontinued.
+
+Explain why this is preferred in real-world applications.
+
+========================================================================
+4. CATEGORY DELETION RULES
+
+A Category cannot be deleted if Products exist inside it.
+
+Admin should first
+
+Move Products
+
+OR
+
+Deactivate Products
+
+before deleting the Category.
+
+Generate proper validation and user-friendly error messages.
+
+========================================================================
+5. COUPON BUSINESS RULES
+
+Implement the following rules:
+
+Coupon must not be expired.
+
+Inactive Coupon cannot be used.
+
+Coupon Code must be unique.
+
+One customer should not be able to use the same coupon repeatedly
+unless explicitly allowed.
+
+If a Coupon is expired,
+
+display it as Expired / Disabled.
+
+Do not remove historical coupon records.
+
+========================================================================
+6. ADDRESS MANAGEMENT RULES
+
+A Customer can
+
+Add Address
+
+Edit Address
+
+Delete Address
+
+Set Default Address
+
+Only ONE Default Address should exist for one Customer.
+
+If another Address becomes Default,
+
+the previous Default Address should automatically become non-default.
+
+Do not allow deletion of the only Default Address unless another
+address is selected as Default.
+
+========================================================================
+7. WISHLIST RULES
+
+A Customer cannot add the same Product multiple times.
+
+If the Product already exists in Wishlist,
+
+display an appropriate message.
+
+Use UserId + ProductId as the uniqueness check.
+
+========================================================================
+8. CART RULES
+
+A Customer cannot have duplicate entries of the same Product in Cart.
+
+If the Product already exists,
+
+increase the Quantity instead of inserting another row.
+
+Quantity cannot become less than one.
+
+Generate Increase Quantity and Decrease Quantity functionality.
+
+========================================================================
+9. PRODUCT RATING RULES
+
+Only Customers who have successfully purchased a Product should be
+allowed to rate it.
+
+Do not allow ratings from users who never purchased the Product.
+
+The Product AverageRating should automatically update whenever a new
+rating is submitted.
+
+Explain the calculation logic.
+
+========================================================================
+10. PRODUCT IMAGE RULES
+
+Use the existing ImagePath field.
+
+Each Product should have only ONE image.
+
+Validate
+
+Allowed Extensions
+
+Maximum File Size
+
+Invalid File Types
+
+If image is missing,
+
+display a Default Product Image.
+
+========================================================================
+11. SEARCH RULES
+
+All search functionality should support partial matching.
+
+Example:
+
+Searching
+
+Rice
+
+should also return
+
+Basmati Rice
+
+Brown Rice
+
+Organic Rice
+
+Search should ignore case sensitivity.
+
+========================================================================
+12. SORTING RULES
+
+Implement sorting wherever applicable.
+
+Price
+
+Name
+
+Newest
+
+Oldest
+
+Highest Rating
+
+Lowest Rating
+
+Popularity
+
+========================================================================
+13. PAGINATION RULES
+
+Every master page should support pagination.
+
+Provide options like
+
+5 Records
+
+10 Records
+
+20 Records
+
+Maintain current search, sorting and filtering after page changes.
+
+========================================================================
+14. DASHBOARD AUTO UPDATE
+
+Dashboard statistics should always reflect the latest database values.
+
+Whenever
+
+Customer Registers
+
+Product Added
+
+Order Placed
+
+Coupon Added
+
+Order Cancelled
+
+Stock Updated
+
+the Dashboard should automatically display updated statistics after
+page refresh.
+
+Never hardcode dashboard values.
+
+========================================================================
+15. ADMIN PROFILE
+
+Every Admin should have
+
+View Profile
+
+Edit Profile
+
+Change Password
+
+Logout
+
+Password should always remain hashed.
+
+========================================================================
+16. SESSION MANAGEMENT
+
+Protect every Admin page.
+
+If Session expires,
+
+redirect to Login.
+
+Prevent browser Back Button access after Logout.
+
+Prevent direct URL access without authentication.
+
+========================================================================
+17. DUPLICATE VALIDATION
+
+Generate duplicate validation for
+
+Email
+
+Mobile Number
+
+Category Name
+
+Coupon Code
+
+Wishlist
+
+Cart
+
+Display meaningful validation messages.
+
+========================================================================
+18. STATUS COLOR CODING
+
+Use consistent Bootstrap badges.
+
+Pending = Yellow
+
+Confirmed = Primary
+
+Packed = Info
+
+Shipped = Dark
+
+Delivered = Success
+
+Cancelled = Danger
+
+Out Of Stock = Danger
+
+Low Stock = Warning
+
+Available = Success
+
+Inactive = Secondary
+
+========================================================================
+19. PROFESSIONAL ORDER NUMBER
+
+Instead of displaying
+
+1
+
+2
+
+3
+
+Generate professional order numbers such as
+
+ORD10001
+
+ORD10002
+
+ORD10003
+
+Explain the generation logic.
+
+========================================================================
+20. DASHBOARD NOTIFICATIONS
+
+Generate notification cards for
+
+Low Stock Products
+
+New Orders
+
+New Customers
+
+Expired Coupons
+
+Pending Deliveries
+
+Cancelled Orders
+
+These notifications should update dynamically.
+
+========================================================================
+21. EMPTY DATA HANDLING
+
+If any table contains no records,
+
+the application should never crash.
+
+Instead display meaningful messages such as
+
+"No Products Available"
+
+"No Orders Found"
+
+"No Customers Registered"
+
+"No Coupons Available"
+
+========================================================================
+22. REPORTS & STATISTICS
+
+Every report should be generated dynamically from the database.
+
+Never hardcode statistical values.
+
+Generate tables first and then graphs/charts.
+
+Explain how every statistic is calculated.
+
+========================================================================
+23. BEGINNER FRIENDLY DEVELOPMENT RULE
+
+Throughout the project,
+
+prefer simple and readable implementations.
+
+Do not use unnecessarily advanced design patterns.
+
+If an advanced concept is genuinely required,
+
+first explain
+
+Why it is needed.
+
+Mark it as
+
+⚠ ADVANCED CONCEPT
+
+Then implement it.
+
+========================================================================
+24. FINAL PROJECT DOCUMENTATION
+
+After completing the entire project,
+
+generate
+
+Complete Project Architecture
+
+Execution Flow of Every Module
+
+Database Relationship Explanation
+
+Folder Structure
+
+Controller Flow
+
+Navigation Flow
+
+Business Logic Documentation
+
+Testing Checklist
+
+Deployment Checklist
+
+Presentation Flow
+
+Possible Interview Questions
+
+Future Scope
+
+Common Debugging Guide
+
+Do not leave any module undocumented.
+
+================================================================================================================================================
+
+                ADDITIONAL BUSINESS LOGIC
+        (MANDATORY IMPLEMENTATION REQUIREMENTS)
+
+========================================================================
+
+Before generating any code, analyse these business rules carefully.
+These are mandatory requirements and should be followed consistently
+throughout the entire project.
+
+Do not make assumptions.
+If any rule conflicts with another module, explain the conflict before
+writing code.
+
+========================================================================
+1. COMPLETE CART TO ORDER EXECUTION FLOW
+
+The complete purchasing flow should be implemented as follows:
+
+Customer Login
+
+↓
+
+Browse Products
+
+↓
+
+Search / Filter / Sort Products
+
+↓
+
+View Product Details
+
+↓
+
+Add Product to Cart
+
+↓
+
+Increase / Decrease Quantity
+
+↓
+
+Proceed to Checkout
+
+↓
+
+Select Existing Address
+OR
+Add New Address
+
+↓
+
+Apply Coupon (Optional)
+
+↓
+
+Display Final Order Summary
+
+↓
+
+Place Order
+
+↓
+
+Create Order
+
+↓
+
+Create OrderDetails
+
+↓
+
+Reduce Product Stock
+
+↓
+
+Clear Cart
+
+↓
+
+Order Status = Pending
+
+Explain every step before implementation.
+
+========================================================================
+2. STOCK MANAGEMENT RULES
+
+Adding a product to Cart must NOT reduce stock.
+
+Stock should reduce ONLY after the Order is successfully placed.
+
+If the Order is cancelled before delivery,
+
+the stock should automatically be restored.
+
+Explain this business logic before implementation.
+
+========================================================================
+3. PRODUCT DELETION RULES
+
+Products should never be permanently deleted if they are already used
+in Orders.
+
+Instead,
+
+mark the Product as
+
+Inactive
+
+or
+
+Discontinued.
+
+Explain why this is preferred in real-world applications.
+
+========================================================================
+4. CATEGORY DELETION RULES
+
+A Category cannot be deleted if Products exist inside it.
+
+Admin should first
+
+Move Products
+
+OR
+
+Deactivate Products
+
+before deleting the Category.
+
+Generate proper validation and user-friendly error messages.
+
+========================================================================
+5. COUPON BUSINESS RULES
+
+Implement the following rules:
+
+Coupon must not be expired.
+
+Inactive Coupon cannot be used.
+
+Coupon Code must be unique.
+
+One customer should not be able to use the same coupon repeatedly
+unless explicitly allowed.
+
+If a Coupon is expired,
+
+display it as Expired / Disabled.
+
+Do not remove historical coupon records.
+
+========================================================================
+6. ADDRESS MANAGEMENT RULES
+
+A Customer can
+
+Add Address
+
+Edit Address
+
+Delete Address
+
+Set Default Address
+
+Only ONE Default Address should exist for one Customer.
+
+If another Address becomes Default,
+
+the previous Default Address should automatically become non-default.
+
+Do not allow deletion of the only Default Address unless another
+address is selected as Default.
+
+========================================================================
+7. WISHLIST RULES
+
+A Customer cannot add the same Product multiple times.
+
+If the Product already exists in Wishlist,
+
+display an appropriate message.
+
+Use UserId + ProductId as the uniqueness check.
+
+========================================================================
+8. CART RULES
+
+A Customer cannot have duplicate entries of the same Product in Cart.
+
+If the Product already exists,
+
+increase the Quantity instead of inserting another row.
+
+Quantity cannot become less than one.
+
+Generate Increase Quantity and Decrease Quantity functionality.
+
+========================================================================
+9. PRODUCT RATING RULES
+
+Only Customers who have successfully purchased a Product should be
+allowed to rate it.
+
+Do not allow ratings from users who never purchased the Product.
+
+The Product AverageRating should automatically update whenever a new
+rating is submitted.
+
+Explain the calculation logic.
+
+========================================================================
+10. PRODUCT IMAGE RULES
+
+Use the existing ImagePath field.
+
+Each Product should have only ONE image.
+
+Validate
+
+Allowed Extensions
+
+Maximum File Size
+
+Invalid File Types
+
+If image is missing,
+
+display a Default Product Image.
+
+========================================================================
+11. SEARCH RULES
+
+All search functionality should support partial matching.
+
+Example:
+
+Searching
+
+Rice
+
+should also return
+
+Basmati Rice
+
+Brown Rice
+
+Organic Rice
+
+Search should ignore case sensitivity.
+
+========================================================================
+12. SORTING RULES
+
+Implement sorting wherever applicable.
+
+Price
+
+Name
+
+Newest
+
+Oldest
+
+Highest Rating
+
+Lowest Rating
+
+Popularity
+
+========================================================================
+13. PAGINATION RULES
+
+Every master page should support pagination.
+
+Provide options like
+
+5 Records
+
+10 Records
+
+20 Records
+
+Maintain current search, sorting and filtering after page changes.
+
+========================================================================
+14. DASHBOARD AUTO UPDATE
+
+Dashboard statistics should always reflect the latest database values.
+
+Whenever
+
+Customer Registers
+
+Product Added
+
+Order Placed
+
+Coupon Added
+
+Order Cancelled
+
+Stock Updated
+
+the Dashboard should automatically display updated statistics after
+page refresh.
+
+Never hardcode dashboard values.
+
+========================================================================
+15. ADMIN PROFILE
+
+Every Admin should have
+
+View Profile
+
+Edit Profile
+
+Change Password
+
+Logout
+
+Password should always remain hashed.
+
+========================================================================
+16. SESSION MANAGEMENT
+
+Protect every Admin page.
+
+If Session expires,
+
+redirect to Login.
+
+Prevent browser Back Button access after Logout.
+
+Prevent direct URL access without authentication.
+
+========================================================================
+17. DUPLICATE VALIDATION
+
+Generate duplicate validation for
+
+Email
+
+Mobile Number
+
+Category Name
+
+Coupon Code
+
+Wishlist
+
+Cart
+
+Display meaningful validation messages.
+
+========================================================================
+18. STATUS COLOR CODING
+
+Use consistent Bootstrap badges.
+
+Pending = Yellow
+
+Confirmed = Primary
+
+Packed = Info
+
+Shipped = Dark
+
+Delivered = Success
+
+Cancelled = Danger
+
+Out Of Stock = Danger
+
+Low Stock = Warning
+
+Available = Success
+
+Inactive = Secondary
+
+========================================================================
+19. PROFESSIONAL ORDER NUMBER
+
+Instead of displaying
+
+1
+
+2
+
+3
+
+Generate professional order numbers such as
+
+ORD10001
+
+ORD10002
+
+ORD10003
+
+Explain the generation logic.
+
+========================================================================
+20. DASHBOARD NOTIFICATIONS
+
+Generate notification cards for
+
+Low Stock Products
+
+New Orders
+
+New Customers
+
+Expired Coupons
+
+Pending Deliveries
+
+Cancelled Orders
+
+These notifications should update dynamically.
+
+========================================================================
+21. EMPTY DATA HANDLING
+
+If any table contains no records,
+
+the application should never crash.
+
+Instead display meaningful messages such as
+
+"No Products Available"
+
+"No Orders Found"
+
+"No Customers Registered"
+
+"No Coupons Available"
+
+========================================================================
+22. REPORTS & STATISTICS
+
+Every report should be generated dynamically from the database.
+
+Never hardcode statistical values.
+
+Generate tables first and then graphs/charts.
+
+Explain how every statistic is calculated.
+
+========================================================================
+23. BEGINNER FRIENDLY DEVELOPMENT RULE
+
+Throughout the project,
+
+prefer simple and readable implementations.
+
+Do not use unnecessarily advanced design patterns.
+
+If an advanced concept is genuinely required,
+
+first explain
+
+Why it is needed.
+
+Mark it as
+
+⚠ ADVANCED CONCEPT
+
+Then implement it.
+
+========================================================================
+24. FINAL PROJECT DOCUMENTATION
+
+After completing the entire project,
+
+generate
+
+Complete Project Architecture
+
+Execution Flow of Every Module
+
+Database Relationship Explanation
+
+Folder Structure
+
+Controller Flow
+
+Navigation Flow
+
+Business Logic Documentation
+
+Testing Checklist
+
+Deployment Checklist
+
+Presentation Flow
+
+Possible Interview Questions
+
+Future Scope
+
+Common Debugging Guide
+
+Do not leave any module undocumented.
+
+========================================================================..................========================================================================
+
+                ADDITIONAL BUSINESS LOGIC
+        (MANDATORY IMPLEMENTATION REQUIREMENTS)
+
+========================================================================
+
+Before generating any code, analyse these business rules carefully.
+These are mandatory requirements and should be followed consistently
+throughout the entire project.
+
+Do not make assumptions.
+If any rule conflicts with another module, explain the conflict before
+writing code.
+
+========================================================================
+1. COMPLETE CART TO ORDER EXECUTION FLOW
+
+The complete purchasing flow should be implemented as follows:
+
+Customer Login
+
+↓
+
+Browse Products
+
+↓
+
+Search / Filter / Sort Products
+
+↓
+
+View Product Details
+
+↓
+
+Add Product to Cart
+
+↓
+
+Increase / Decrease Quantity
+
+↓
+
+Proceed to Checkout
+
+↓
+
+Select Existing Address
+OR
+Add New Address
+
+↓
+
+Apply Coupon (Optional)
+
+↓
+
+Display Final Order Summary
+
+↓
+
+Place Order
+
+↓
+
+Create Order
+
+↓
+
+Create OrderDetails
+
+↓
+
+Reduce Product Stock
+
+↓
+
+Clear Cart
+
+↓
+
+Order Status = Pending
+
+Explain every step before implementation.
+
+========================================================================
+2. STOCK MANAGEMENT RULES
+
+Adding a product to Cart must NOT reduce stock.
+
+Stock should reduce ONLY after the Order is successfully placed.
+
+If the Order is cancelled before delivery,
+
+the stock should automatically be restored.
+
+Explain this business logic before implementation.
+
+========================================================================
+3. PRODUCT DELETION RULES
+
+Products should never be permanently deleted if they are already used
+in Orders.
+
+Instead,
+
+mark the Product as
+
+Inactive
+
+or
+
+Discontinued.
+
+Explain why this is preferred in real-world applications.
+
+========================================================================
+4. CATEGORY DELETION RULES
+
+A Category cannot be deleted if Products exist inside it.
+
+Admin should first
+
+Move Products
+
+OR
+
+Deactivate Products
+
+before deleting the Category.
+
+Generate proper validation and user-friendly error messages.
+
+========================================================================
+5. COUPON BUSINESS RULES
+
+Implement the following rules:
+
+Coupon must not be expired.
+
+Inactive Coupon cannot be used.
+
+Coupon Code must be unique.
+
+One customer should not be able to use the same coupon repeatedly
+unless explicitly allowed.
+
+If a Coupon is expired,
+
+display it as Expired / Disabled.
+
+Do not remove historical coupon records.
+
+========================================================================
+6. ADDRESS MANAGEMENT RULES
+
+A Customer can
+
+Add Address
+
+Edit Address
+
+Delete Address
+
+Set Default Address
+
+Only ONE Default Address should exist for one Customer.
+
+If another Address becomes Default,
+
+the previous Default Address should automatically become non-default.
+
+Do not allow deletion of the only Default Address unless another
+address is selected as Default.
+
+========================================================================
+7. WISHLIST RULES
+
+A Customer cannot add the same Product multiple times.
+
+If the Product already exists in Wishlist,
+
+display an appropriate message.
+
+Use UserId + ProductId as the uniqueness check.
+
+========================================================================
+8. CART RULES
+
+A Customer cannot have duplicate entries of the same Product in Cart.
+
+If the Product already exists,
+
+increase the Quantity instead of inserting another row.
+
+Quantity cannot become less than one.
+
+Generate Increase Quantity and Decrease Quantity functionality.
+
+========================================================================
+9. PRODUCT RATING RULES
+
+Only Customers who have successfully purchased a Product should be
+allowed to rate it.
+
+Do not allow ratings from users who never purchased the Product.
+
+The Product AverageRating should automatically update whenever a new
+rating is submitted.
+
+Explain the calculation logic.
+
+========================================================================
+10. PRODUCT IMAGE RULES
+
+Use the existing ImagePath field.
+
+Each Product should have only ONE image.
+
+Validate
+
+Allowed Extensions
+
+Maximum File Size
+
+Invalid File Types
+
+If image is missing,
+
+display a Default Product Image.
+
+========================================================================
+11. SEARCH RULES
+
+All search functionality should support partial matching.
+
+Example:
+
+Searching
+
+Rice
+
+should also return
+
+Basmati Rice
+
+Brown Rice
+
+Organic Rice
+
+Search should ignore case sensitivity.
+
+========================================================================
+12. SORTING RULES
+
+Implement sorting wherever applicable.
+
+Price
+
+Name
+
+Newest
+
+Oldest
+
+Highest Rating
+
+Lowest Rating
+
+Popularity
+
+========================================================================
+13. PAGINATION RULES
+
+Every master page should support pagination.
+
+Provide options like
+
+5 Records
+
+10 Records
+
+20 Records
+
+Maintain current search, sorting and filtering after page changes.
+
+========================================================================
+14. DASHBOARD AUTO UPDATE
+
+Dashboard statistics should always reflect the latest database values.
+
+Whenever
+
+Customer Registers
+
+Product Added
+
+Order Placed
+
+Coupon Added
+
+Order Cancelled
+
+Stock Updated
+
+the Dashboard should automatically display updated statistics after
+page refresh.
+
+Never hardcode dashboard values.
+
+========================================================================
+15. ADMIN PROFILE
+
+Every Admin should have
+
+View Profile
+
+Edit Profile
+
+Change Password
+
+Logout
+
+Password should always remain hashed.
+
+========================================================================
+16. SESSION MANAGEMENT
+
+Protect every Admin page.
+
+If Session expires,
+
+redirect to Login.
+
+Prevent browser Back Button access after Logout.
+
+Prevent direct URL access without authentication.
+
+========================================================================
+17. DUPLICATE VALIDATION
+
+Generate duplicate validation for
+
+Email
+
+Mobile Number
+
+Category Name
+
+Coupon Code
+
+Wishlist
+
+Cart
+
+Display meaningful validation messages.
+
+========================================================================
+18. STATUS COLOR CODING
+
+Use consistent Bootstrap badges.
+
+Pending = Yellow
+
+Confirmed = Primary
+
+Packed = Info
+
+Shipped = Dark
+
+Delivered = Success
+
+Cancelled = Danger
+
+Out Of Stock = Danger
+
+Low Stock = Warning
+
+Available = Success
+
+Inactive = Secondary
+
+========================================================================
+19. PROFESSIONAL ORDER NUMBER
+
+Instead of displaying
+
+1
+
+2
+
+3
+
+Generate professional order numbers such as
+
+ORD10001
+
+ORD10002
+
+ORD10003
+
+Explain the generation logic.
+
+========================================================================
+20. DASHBOARD NOTIFICATIONS
+
+Generate notification cards for
+
+Low Stock Products
+
+New Orders
+
+New Customers
+
+Expired Coupons
+
+Pending Deliveries
+
+Cancelled Orders
+
+These notifications should update dynamically.
+
+========================================================================
+21. EMPTY DATA HANDLING
+
+If any table contains no records,
+
+the application should never crash.
+
+Instead display meaningful messages such as
+
+"No Products Available"
+
+"No Orders Found"
+
+"No Customers Registered"
+
+"No Coupons Available"
+
+========================================================================
+22. REPORTS & STATISTICS
+
+Every report should be generated dynamically from the database.
+
+Never hardcode statistical values.
+
+Generate tables first and then graphs/charts.
+
+Explain how every statistic is calculated.
+
+========================================================================
+23. BEGINNER FRIENDLY DEVELOPMENT RULE
+
+Throughout the project,
+
+prefer simple and readable implementations.
+
+Do not use unnecessarily advanced design patterns.
+
+If an advanced concept is genuinely required,
+
+first explain
+
+Why it is needed.
+
+Mark it as
+
+⚠ ADVANCED CONCEPT
+
+Then implement it.
+
+========================================================================
+24. FINAL PROJECT DOCUMENTATION
+
+After completing the entire project,
+
+generate
+
+Complete Project Architecture
+
+Execution Flow of Every Module
+
+Database Relationship Explanation
+
+Folder Structure
+
+Controller Flow
+
+Navigation Flow
+
+Business Logic Documentation
+
+Testing Checklist
+
+Deployment Checklist
+
+Presentation Flow
+
+Possible Interview Questions
+
+Future Scope
+
+Common Debugging Guide
+
+Do not leave any module undocumented.
+
+========================================================================If StockQuantity = 0
+
+↓
+
+Disable "Add to Cart"
+
+↓
+
+Display "Out of Stock"
+
+↓
+
+Customer cannot proceed to Checkout with that product.Even if a Product, Category, Coupon, or Customer becomes Inactive,
+
+all historical Orders and OrderDetails must remain intact.
+
+Never delete historical business records.
+
+Use soft delete (IsActive) or status changes wherever possible.

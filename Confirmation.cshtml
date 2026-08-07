@@ -1,0 +1,40 @@
+@model EGroceryStore.ViewModels.OrderDetailsViewModel
+@{
+    ViewBag.Title = "Order Confirmation";
+}
+
+<div class="container eg-section">
+    <div class="eg-confirmation-box text-center">
+        <h2>Order Placed Successfully!</h2>
+        <p>Thank you for shopping with us.</p>
+    </div>
+
+    <div class="eg-form-card">
+        <h4>Order #@Model.OrderNumber</h4>
+        <p>Order Date: @Model.OrderDate.ToString("dd MMM yyyy, hh:mm tt")</p>
+        <p>Estimated Delivery: @Model.OrderDate.AddDays(2).ToString("dd MMM yyyy")</p>
+        <p>Delivery Address: @Model.DeliveryAdress</p>
+        <p>Payment Method: @Model.PaymentMethod</p>
+        <p>Order Status: <span class="eg-badge">@Model.OrderStatus</span></p>
+
+        <table class="table">
+            <thead><tr><th>Product</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr></thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td><img src="~/Content/Images/Products/@item.ImagePath" class="eg-cart-thumb" /> @item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>Rs. @item.Price</td>
+                        <td>Rs. @item.SubTotal</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h4>Grand Total: Rs. @Model.TotalAmount</h4>
+    </div>
+
+    @Html.ActionLink("Continue Shopping", "List", "Product", null, new { @class = "btn eg-btn-primary" })
+    @Html.ActionLink("View My Orders", "History", "Order", null, new { @class = "btn eg-btn-outline" })
+</div>

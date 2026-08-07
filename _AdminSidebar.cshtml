@@ -1,0 +1,44 @@
+@{
+    // RouteData automatically knows which Controller is currently handling
+    // this page - we read it here, and use it below to highlight whichever
+    // sidebar link matches the current page. Future Admin Controllers
+    // (AdminCategory, AdminProduct, etc.) will light up automatically here
+    // once they exist - no changes needed to this file when we add them.
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+}
+<div class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+        <span class="glyphicon glyphicon-shopping-cart"></span> EGrocery Admin
+    </div>
+    <ul class="admin-sidebar-menu">
+        <li class="@(currentController == "AdminDashboard" ? "active" : "")">
+            <a href="@Url.Action("Index", "AdminDashboard")"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
+        </li>
+
+        <li class="@(currentController == "AdminCategory" ? "active" : "")">
+            <a href="@Url.Action("Index", "AdminCategory")"><span class="glyphicon glyphicon-list-alt"></span> Categories</a>
+        </li>
+
+        <li class="@(currentController == "AdminProduct" ? "active" : "")">
+            <a href="@Url.Action("Index", "AdminProduct")"><span class="glyphicon glyphicon-shopping-cart"></span> Products</a>
+        </li>
+        <li class="@(currentController == "AdminCustomer" ? "active" : "")">
+            <a href="#"><span class="glyphicon glyphicon-user"></span> Customers</a>
+        </li>
+        <li class="@(currentController == "AdminOrder" ? "active" : "")">
+            <a href="#"><span class="glyphicon glyphicon-list"></span> Orders</a>
+        </li>
+        <li class="@(currentController == "AdminCoupon" ? "active" : "")">
+            <a href="#"><span class="glyphicon glyphicon-tag"></span> Coupons</a>
+        </li>
+        <li class="@(currentController == "AdminReport" ? "active" : "")">
+            <a href="#"><span class="glyphicon glyphicon-stats"></span> Reports</a>
+        </li>
+        <li class="@(currentController == "AdminProfile" ? "active" : "")">
+            <a href="#"><span class="glyphicon glyphicon-cog"></span> Profile</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Logout", "Account")"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        </li>
+    </ul>
+</div>

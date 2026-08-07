@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EGrocery</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/CSS/Customer.css" rel="stylesheet" />
+    <link href="~/Content/CSS/Product.css" rel="stylesheet" />
+    <link href="~/Content/CSS/Cart.css" rel="stylesheet" />
+    <link href="~/Content/CSS/Order.css" rel="stylesheet" />
+    <link href="~/Content/CSS/Responsive.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <!-- ===================== NAVBAR (visible on every Customer page) ===================== -->
+    <nav class="navbar navbar-default navbar-fixed-top eg-navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#egNavbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("EGrocery", "Index", "Home", null, new { @class = "navbar-brand eg-brand" })
+            </div>
+            <div class="collapse navbar-collapse" id="egNavbar">
+                @* Search box - submits to Product/List using GET, so the search
+                    becomes a normal, bookmarkable URL with the term inside it. *@
+                @using (Html.BeginForm("List", "Product", FormMethod.Get, new { @class = "navbar-form navbar-left eg-search-form" }))
+                {
+                    <div class="input-group">
+                        <input type="text" name="searchTerm" class="form-control" placeholder="Search fruits, vegetables, snacks..." />
+                        <span class="input-group-btn">
+                            <button class="btn eg-btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                }
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="@(ViewBag.ActiveMenu == "Home" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="@(ViewBag.ActiveMenu == "Categories" ? "active" : "")">@Html.ActionLink("Categories", "Index", "Category")</li>
+                    <li class="@(ViewBag.ActiveMenu == "Products" ? "active" : "")">@Html.ActionLink("Products", "List", "Product")</li>
+                    @if (Session["UserId"] != null)
+                    {
+                        int currentUserId = System.Convert.ToInt32(Session["UserId"]);
+                        int wishlistCount = EGroceryStore.Helpers.NavbarHelper.GetWishlistCount(currentUserId);
+                        int cartCount = EGroceryStore.Helpers.NavbarHelper.GetCartCount(currentUserId);
+
+                        <li class="@(ViewBag.ActiveMenu == "Wishlist" ? "active" : "")">
+                            @Html.ActionLink("Wishlist (" + wishlistCount + ")", "Index", "Wishlist")
+                        </li>
+                        <li class="@(ViewBag.ActiveMenu == "Cart" ? "active" : "")">
+                            @Html.ActionLink("Cart (" + cartCount + ")", "Index", "Cart")
+                        </li>
+                        <li class="@(ViewBag.ActiveMenu == "Orders" ? "active" : "")">@Html.ActionLink("My Orders", "History", "Order")</li>
+                        <li class="@(ViewBag.ActiveMenu == "Addresses" ? "active" : "")">@Html.ActionLink("My Addresses", "Index", "Address")</li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-user"></span> @Session["UserName"] <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("My Profile", "Index", "Profile")</li>
+                                <li>@Html.ActionLink("Change Password", "ChangePassword", "Profile")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="eg-page-wrapper">
+        @* ===== TempData Success / Error messages - shown on every page ===== *@
+        <div class="container-fluid eg-alert-container">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+        </div>
+        @RenderBody()
+    </div>
+    <!-- ===================== FOOTER (visible on every Customer page) ===================== -->
+    <footer class="eg-footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>EGrocery</h4>
+                    <p>Fresh groceries, daily essentials and organic products delivered to your door.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Quick Links</h4>
+                    <p>
+                        @Html.ActionLink("Home", "Index", "Home") |
+                        @Html.ActionLink("Categories", "Index", "Category") |
+                        @Html.ActionLink("Products", "List", "Product")
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h4>My Account</h4>
+                    <p>
+                        @Html.ActionLink("My Orders", "History", "Order") |
+                        @Html.ActionLink("My Profile", "Index", "Profile")
+                    </p>
+                </div>
+            </div>
+            <hr />
+            <p class="text-center">&copy; @DateTime.Now.Year EGrocery Store. Built as a training project.</p>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

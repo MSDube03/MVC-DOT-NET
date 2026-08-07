@@ -1,0 +1,69 @@
+@model EGroceryStore.Models.Product
+@{
+    ViewBag.Title = Model.ProductName;
+}
+
+<div class="container-fluid eg-section">
+
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("Categories", "Index", "Category")</li>
+        @if (ViewBag.Category != null)
+        {
+            <li>@Html.ActionLink((string)ViewBag.Category.CategoryName, "List", "Product", new { categoryId = (int)ViewBag.Category.CategoryId }, null)</li>
+        }
+        <li class="active">@Model.ProductName</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-5">
+            <img src="~/Content/Images/Products/@Model.ImagePath" alt="@Model.ProductName" class="eg-detail-img" />
+        </div>
+        <div class="col-md-7">
+            <h2>@Model.ProductName</h2>
+            <p class="text-muted">Category: @(ViewBag.Category != null ? ViewBag.Category.CategoryName : "")</p>
+            <p class="eg-detail-rating">Rating: @(Model.AverageRating.HasValue ? Model.AverageRating.Value.ToString("0.0") : "No ratings yet")</p>
+            <h3 class="eg-detail-price">Rs. @Model.Price <small>/ @Model.Units</small></h3>
+
+            @if (Model.StockQuantity > 0)
+            {
+                <p class="eg-in-stock">In Stock (@Model.StockQuantity available)</p>
+            }
+            else
+            {
+                <p class="eg-out-of-stock">Out of Stock</p>
+            }
+
+            <p>@Model.Description</p>
+
+            <div class="eg-detail-actions">
+                @using (Html.BeginForm("Add", "Cart", FormMethod.Post))
+                {
+                    @Html.Hidden("productId", Model.ProductId)
+                    if (Model.StockQuantity <= 0)
+                    {
+                        <button type="submit" class="btn eg-btn-primary" disabled="disabled">Add to Cart</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn eg-btn-primary">Add to Cart</button>
+                    }
+                }
+                @using (Html.BeginForm("Add", "Wishlist", FormMethod.Post))
+                {
+                    @Html.Hidden("productId", Model.ProductId)
+                    <button type="submit" class="btn eg-btn-outline">Add to Wishlist</button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== RELATED PRODUCTS ===================== -->
+    <h3 class="eg-section-title">Related Products</h3>
+    <div class="row">
+        @foreach (var related in ViewBag.RelatedProducts)
+        {
+            @Html.Partial("~/Views/Shared/_ProductCard.cshtml", related)
+        }
+    </div>
+</div>

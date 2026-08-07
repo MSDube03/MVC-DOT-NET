@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EGrocery Admin</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/CSS/Admin.css" rel="stylesheet" />
+    <link href="~/Content/CSS/Category.css" rel="stylesheet" />
+    <link href="~/Content/CSS/AdminProduct.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <!-- ===================== TOP NAVBAR ===================== -->
+    <nav class="navbar navbar-default navbar-fixed-top admin-navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand admin-navbar-brand" href="@Url.Action("Index", "AdminDashboard")">EGrocery Admin Panel</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">@DateTime.Now.ToString("dd MMM yyyy")</li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span> @Session["UserName"] <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">My Profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-body-wrapper">
+        @Html.Partial("~/Views/Shared/_AdminSidebar.cshtml")
+
+        <div class="admin-content">
+            @* TempData messages - shown on every Admin page *@
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer class="admin-footer">
+        <p class="text-center">&copy; @DateTime.Now.Year EGrocery Admin Panel. Internal use only.</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

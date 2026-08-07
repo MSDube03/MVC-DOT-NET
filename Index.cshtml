@@ -1,0 +1,58 @@
+@model List<EGroceryStore.ViewModels.WishlistItemViewModel>
+@{
+    ViewBag.Title = "My Wishlist";
+}
+
+<div class="container-fluid eg-section">
+    <h3 class="eg-section-title">My Wishlist</h3>
+
+    @if (Model.Count == 0)
+    {
+        <div class="eg-empty-state">
+            <h4>Your Wishlist is Empty</h4>
+            <p>Save products you love for later.</p>
+            @Html.ActionLink("Browse Products", "List", "Product", null, new { @class = "btn eg-btn-primary" })
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="eg-product-card">
+                        <img src="~/Content/Images/Products/@item.ImagePath" alt="@item.ProductName" class="eg-product-img" />
+                        <div class="eg-product-body">
+                            <p class="eg-product-name">@item.ProductName</p>
+                            <p class="eg-product-price">Rs. @item.Price</p>
+                            <p class="eg-product-rating">Rating: @(item.AverageRating.HasValue ? item.AverageRating.Value.ToString("0.0") : "No ratings yet")</p>
+                            <p>@(item.StockQuantity > 0 ? "In Stock" : "Out of Stock")</p>
+
+                            <div class="eg-product-actions">
+                                @using (Html.BeginForm("MoveToCart", "Wishlist", FormMethod.Post, new { @class = "eg-inline-form" }))
+                                {
+                                    @Html.Hidden("wishlistId", item.WishlistId)
+                                    @Html.Hidden("productId", item.ProductId)
+                                    if (item.StockQuantity <= 0)
+                                    {
+                                        <button type="submit" class="btn eg-btn-primary btn-sm" disabled="disabled">Move to Cart</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn eg-btn-primary btn-sm">Move to Cart</button>
+                                    }
+                                }
+                                @using (Html.BeginForm("Remove", "Wishlist", FormMethod.Post, new { @class = "eg-inline-form" }))
+                                {
+                                    @Html.Hidden("wishlistId", item.WishlistId)
+                                    <button type="submit" class="btn eg-btn-outline btn-sm">Remove</button>
+                                }
+                                <a href="@Url.Action("Details", "Product", new { id = item.ProductId })" class="btn eg-btn-outline btn-sm">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

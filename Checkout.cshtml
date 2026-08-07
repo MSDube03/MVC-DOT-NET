@@ -1,0 +1,109 @@
+@model EGroceryStore.ViewModels.CheckoutViewModel
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="container-fluid eg-section">
+    <h3 class="eg-section-title">Checkout</h3>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            @using (Html.BeginForm("PlaceOrder", "Order", FormMethod.Post, new { id = "placeOrderForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- ===================== ADDRESS SELECTION ===================== -->
+                <div class="eg-form-card">
+                    <h4>Delivery Address</h4>
+                    @if (Model.Addresses.Count == 0)
+                    {
+                        <p>You have no saved addresses. @Html.ActionLink("Add one now", "Add", "Address")</p>
+                    }
+                    else
+                    {
+                        foreach (var address in Model.Addresses)
+                        {
+                            <div class="eg-address-option">
+                                <label>
+                                    @if (address.AdressId == Model.SelectedAddressId)
+                                    {
+                                        <input type="radio" name="selectedAddressId" value="@address.AdressId" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" name="selectedAddressId" value="@address.AdressId" />
+                                    }
+                                    <strong>@address.FullName</strong> (@address.AdressType) -
+                                    @address.AdressLine1, @address.City, @address.State - @address.Pincode
+                                </label>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <!-- ===================== CART SUMMARY ===================== -->
+                <div class="eg-form-card">
+                    <h4>Order Items</h4>
+                    <table class="table">
+                        <tbody>
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <tr>
+                                    <td><img src="~/Content/Images/Products/@item.ImagePath" class="eg-cart-thumb" /> @item.ProductName</td>
+                                    <td>Qty: @item.Quantity</td>
+                                    <td>Rs. @item.Subtotal</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ===================== PAYMENT METHOD ===================== -->
+                <div class="eg-form-card">
+                    <h4>Payment Method</h4>
+                    <div class="radio"><label><input type="radio" name="paymentMethod" value="Cash On Delivery" checked="checked" /> Cash On Delivery</label></div>
+                    <div class="radio"><label><input type="radio" name="paymentMethod" value="UPI" /> UPI</label></div>
+                    <div class="radio"><label><input type="radio" name="paymentMethod" value="Debit Card" /> Debit Card</label></div>
+                    <div class="radio"><label><input type="radio" name="paymentMethod" value="Credit Card" /> Credit Card</label></div>
+                    <div class="radio"><label><input type="radio" name="paymentMethod" value="Internet Banking" /> Internet Banking</label></div>
+                    <p class="text-muted"><small>This is a training project - no real payment gateway is used. Your chosen method is simply saved with the order.</small></p>
+                </div>
+            }
+
+            <!-- ===================== COUPON BOX =====================
+                 This posts to a DIFFERENT action (ApplyCoupon), not the
+                 Place Order form above, so applying a coupon never
+                 accidentally places the order. -->
+            <div class="eg-form-card">
+                <h5>Have a Coupon?</h5>
+                @using (Html.BeginForm("ApplyCoupon", "Order", FormMethod.Post, new { @class = "form-inline" }))
+                {
+                    <input type="text" name="couponCode" class="form-control" placeholder="Enter coupon code" value="@Model.CouponCode" />
+                    <button type="submit" class="btn eg-btn-primary">Apply Coupon</button>
+                }
+                @if (Model.Discount > 0)
+                {
+                    @using (Html.BeginForm("RemoveCoupon", "Order", FormMethod.Post))
+                    {
+                        <button type="submit" class="btn eg-btn-outline">Remove Coupon</button>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="eg-summary-box">
+                <h4>Order Summary</h4>
+                <p>Subtotal: Rs. @Model.Subtotal</p>
+                @if (Model.Discount > 0)
+                {
+                    <p>Coupon (@Model.CouponCode): -Rs. @Model.Discount</p>
+                }
+                <h4>Grand Total: Rs. @Model.GrandTotal</h4>
+
+                <button type="submit" form="placeOrderForm" class="btn eg-btn-primary btn-block">Place Order</button>
+            </div>
+        </div>
+    </div>
+</div>

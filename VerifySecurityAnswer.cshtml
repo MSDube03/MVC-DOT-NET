@@ -1,0 +1,39 @@
+@model EGroceryStore.ViewModels.VerifySecurityAnswerViewModel
+@{
+    ViewBag.Title = "Security Question";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card mt-5">
+                <div class="card-header bg-primary text-white"><h4>Answer Your Security Question</h4></div>
+                <div class="card-body">
+                    @using (Html.BeginForm("VerifySecurityAnswer", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.UserId)
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            <label>Security Question</label>
+                            <p class="form-control-plaintext"><strong>@Model.SecurityQuestion</strong></p>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SecurityAnswer)
+                            @Html.TextBoxFor(m => m.SecurityAnswer, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.SecurityAnswer, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,37 @@
+@model List<EGroceryStore.Models.Order>
+@{
+    ViewBag.Title = "My Orders";
+}
+
+<div class="container-fluid eg-section">
+    <h3 class="eg-section-title">My Orders</h3>
+
+    @if (Model.Count == 0)
+    {
+        <div class="eg-empty-state">
+            <p>You haven't placed any orders yet.</p>
+            @Html.ActionLink("Start Shopping", "List", "Product", null, new { @class = "btn eg-btn-primary" })
+        </div>
+    }
+    else
+    {
+        <table class="table eg-order-table">
+            <thead>
+                <tr><th>Order Number</th><th>Date</th><th>Amount</th><th>Order Status</th><th>Payment Status</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.OrderNumber</td>
+                        <td>@order.OrderDate.GetValueOrDefault().ToString("ddMMyyyy")</td>
+                        <td>Rs. @order.TotalAmount</td>
+                        <td><span class="eg-badge">@order.OrderStatus</span></td>
+                        <td>@order.PaymentStatus</td>
+                        <td>@Html.ActionLink("View Details", "Details", "Order", new { id = order.OrderId }, new { @class = "btn eg-btn-outline btn-sm" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

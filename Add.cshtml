@@ -1,0 +1,76 @@
+@model EGroceryStore.ViewModels.ProductFormViewModel
+@{
+    ViewBag.Title = "Add Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Dashboard", "Index", "AdminDashboard")</li>
+    <li>@Html.ActionLink("Products", "Index", "AdminProduct")</li>
+    <li class="active">Add Product</li>
+</ol>
+
+<div class="adm-section-card adm-form-card">
+    <h4>Add New Product</h4>
+    @using (Html.BeginForm("Add", "AdminProduct", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label>Category</label>
+            @Html.DropDownListFor(m => m.CategoryId, new SelectList((System.Collections.IEnumerable)ViewBag.Categories, "CategoryId", "CategoryName"), "-- Select Category --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ProductName)
+            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3 })
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Price)
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01" })
+                    @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StockQuantity, "Stock Quantity")
+                    @Html.TextBoxFor(m => m.StockQuantity, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.StockQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Units)
+                    @Html.TextBoxFor(m => m.Units, new { @class = "form-control", placeholder = "e.g. kg, litre, pack" })
+                    @Html.ValidationMessageFor(m => m.Units, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Product Image (optional)</label>
+            <input type="file" name="ProductImage" class="form-control" accept="image/*" />
+            <p class="help-block">Allowed: .jpg, .jpeg, .png, .gif - Max size: 2 MB</p>
+        </div>
+
+        <div class="checkbox">
+            <label>@Html.CheckBoxFor(m => m.IsActive) Active (visible to customers)</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+        @Html.ActionLink("Cancel", "Index", "AdminProduct", null, new { @class = "btn btn-link" })
+    }
+</div>

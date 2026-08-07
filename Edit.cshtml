@@ -1,0 +1,37 @@
+@model EGroceryStore.ViewModels.EditProfileViewModel
+@{
+    ViewBag.Title = "Edit Profile";
+}
+
+<div class="container eg-section">
+    <div class="eg-form-card">
+        <h3>Edit Profile</h3>
+        @using (Html.BeginForm("Edit", "Profile", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MobileNumber)
+                @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MobileNumber, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn eg-btn-primary">Save Changes</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

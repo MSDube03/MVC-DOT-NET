@@ -1,0 +1,129 @@
+@model EGroceryStore.ViewModels.ProductListViewModel
+@{
+    ViewBag.Title = "Products";
+}
+
+<div class="container-fluid eg-section">
+    <div class="row">
+
+        <!-- ===================== FILTER SIDEBAR ===================== -->
+        <div class="col-md-3">
+            <div class="eg-filter-box">
+                @using (Html.BeginForm("List", "Product", FormMethod.Get))
+                {
+                    <input type="hidden" name="sortBy" value="@Model.SortBy" />
+
+                    <h5>Search</h5>
+                    <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Search products..." />
+
+                    <h5 class="eg-filter-heading">Category</h5>
+                    <select name="categoryId" class="form-control">
+                        <option value="">All Categories</option>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            if (Model.SelectedCategoryId == cat.CategoryId)
+                            {
+                                <option value="@cat.CategoryId" selected="selected">@cat.CategoryName</option>
+                            }
+                            else
+                            {
+                                <option value="@cat.CategoryId">@cat.CategoryName</option>
+                            }
+                        }
+                    </select>
+
+                    <h5 class="eg-filter-heading">Price Range</h5>
+                    <div class="row">
+                        <div class="col-xs-6"><input type="number" name="minPrice" value="@Model.MinPrice" class="form-control" placeholder="Min" /></div>
+                        <div class="col-xs-6"><input type="number" name="maxPrice" value="@Model.MaxPrice" class="form-control" placeholder="Max" /></div>
+                    </div>
+
+                    <h5 class="eg-filter-heading">Availability</h5>
+                    <select name="availability" class="form-control">
+                        <option value="">All</option>
+                        <option value="InStock" selected="@(Model.Availability == "InStock" ? "selected" : null)">In Stock</option>
+                        <option value="OutOfStock" selected="@(Model.Availability == "OutOfStock" ? "selected" : null)">Out of Stock</option>
+                    </select>
+
+                    <h5 class="eg-filter-heading">Minimum Rating</h5>
+                    <select name="minRating" class="form-control">
+                        <option value="">Any Rating</option>
+                        <option value="5" selected="@(Model.MinRating == 5 ? "selected" : null)">5 stars &amp; above</option>
+                        <option value="4" selected="@(Model.MinRating == 4 ? "selected" : null)">4 stars &amp; above</option>
+                        <option value="3" selected="@(Model.MinRating == 3 ? "selected" : null)">3 stars &amp; above</option>
+                        <option value="2" selected="@(Model.MinRating == 2 ? "selected" : null)">2 stars &amp; above</option>
+                        <option value="1" selected="@(Model.MinRating == 1 ? "selected" : null)">1 star &amp; above</option>
+                    </select>
+
+                    <button type="submit" class="btn eg-btn-primary btn-block eg-filter-btn">Apply Filters</button>
+                    <a href="@Url.Action("List", "Product")" class="btn eg-btn-outline btn-block">Clear Filters</a>
+                }
+            </div>
+        </div>
+
+        <!-- ===================== PRODUCT GRID ===================== -->
+        <div class="col-md-9">
+
+            <div class="eg-sort-bar">
+                <span>@Model.Products.Count products shown</span>
+                @using (Html.BeginForm("List", "Product", FormMethod.Get))
+                {
+                    <input type="hidden" name="searchTerm" value="@Model.SearchTerm" />
+                    <input type="hidden" name="categoryId" value="@Model.SelectedCategoryId" />
+                    <input type="hidden" name="minPrice" value="@Model.MinPrice" />
+                    <input type="hidden" name="maxPrice" value="@Model.MaxPrice" />
+                    <input type="hidden" name="availability" value="@Model.Availability" />
+                    <input type="hidden" name="minRating" value="@Model.MinRating" />
+
+                    <select name="sortBy" class="form-control eg-sort-select" onchange="this.form.submit()">
+                        <option value="">Sort By</option>
+                        <option value="PriceLowToHigh" selected="@(Model.SortBy == "PriceLowToHigh" ? "selected" : null)">Price: Low to High</option>
+                        <option value="PriceHighToLow" selected="@(Model.SortBy == "PriceHighToLow" ? "selected" : null)">Price: High to Low</option>
+                        <option value="Newest" selected="@(Model.SortBy == "Newest" ? "selected" : null)">Newest First</option>
+                        <option value="Rating" selected="@(Model.SortBy == "Rating" ? "selected" : null)">Highest Rating</option>
+                        <option value="Alphabetical" selected="@(Model.SortBy == "Alphabetical" ? "selected" : null)">Alphabetical</option>
+                    </select>
+                }
+            </div>
+
+            @if (Model.Products.Count == 0)
+            {
+                <div class="eg-empty-state">
+                    <h4>No Products Found</h4>
+                    <p>Try changing your search or filters.</p>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var product in Model.Products)
+                    {
+                        @Html.Partial("~/Views/Shared/_ProductCard.cshtml", product)
+                    }
+                </div>
+            }
+                <!-- ===================== PAGINATION ===================== -->
+                @if (Model.TotalPages > 1)
+                {
+                    <ul class="pagination eg-pagination">
+                        @for (int p = 1; p <= Model.TotalPages; p++)
+                        {
+                            <li class="@(p == Model.CurrentPage ? "active" : "")">
+                                <a href="@Url.Action("List", "Product", new {
+                                    searchTerm = Model.SearchTerm,
+                                    categoryId = Model.SelectedCategoryId,
+                                    minPrice = Model.MinPrice,
+                                    maxPrice = Model.MaxPrice,
+                                    availability = Model.Availability,
+                                    minRating = Model.MinRating,
+                                    sortBy = Model.SortBy,
+                                    page = p
+                                })">@p</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+        </div>
+    </div>
+</div>

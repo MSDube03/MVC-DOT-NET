@@ -1,58 +1,347 @@
-@model List<EGroceryStore.ViewModels.WishlistItemViewModel>
 @{
-    ViewBag.Title = "My Wishlist";
+    ViewBag.Title = "Home";
 }
 
-<div class="container-fluid eg-section">
-    <h3 class="eg-section-title">My Wishlist</h3>
-
-    @if (Model.Count == 0)
-    {
-        <div class="eg-empty-state">
-            <h4>Your Wishlist is Empty</h4>
-            <p>Save products you love for later.</p>
-            @Html.ActionLink("Browse Products", "List", "Product", null, new { @class = "btn eg-btn-primary" })
-        </div>
+<style>
+    /* ===================== NO-SCROLL PAGE SHELL ===================== */
+    html, body {
+        height: 100%;
     }
-    else
-    {
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="eg-product-card">
-                        <img src="~/Content/Images/Products/@item.ImagePath" alt="@item.ProductName" class="eg-product-img" />
-                        <div class="eg-product-body">
-                            <p class="eg-product-name">@item.ProductName</p>
-                            <p class="eg-product-price">Rs. @item.Price</p>
-                            <p class="eg-product-rating">Rating: @(item.AverageRating.HasValue ? item.AverageRating.Value.ToString("0.0") : "No ratings yet")</p>
-                            <p>@(item.StockQuantity > 0 ? "In Stock" : "Out of Stock")</p>
 
-                            <div class="eg-product-actions">
-                                @using (Html.BeginForm("MoveToCart", "Wishlist", FormMethod.Post, new { @class = "eg-inline-form" }))
-                                {
-                                    @Html.Hidden("wishlistId", item.WishlistId)
-                                    @Html.Hidden("productId", item.ProductId)
-                                    if (item.StockQuantity <= 0)
-                                    {
-                                        <button type="submit" class="btn eg-btn-primary btn-sm" disabled="disabled">Move to Cart</button>
-                                    }
-                                    else
-                                    {
-                                        <button type="submit" class="btn eg-btn-primary btn-sm">Move to Cart</button>
-                                    }
-                                }
-                                @using (Html.BeginForm("Remove", "Wishlist", FormMethod.Post, new { @class = "eg-inline-form" }))
-                                {
-                                    @Html.Hidden("wishlistId", item.WishlistId)
-                                    <button type="submit" class="btn eg-btn-outline btn-sm">Remove</button>
-                                }
-                                <a href="@Url.Action("Details", "Product", new { id = item.ProductId })" class="btn eg-btn-outline btn-sm">View</a>
-                            </div>
-                        </div>
+    .eg-page-wrap {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* ===================== HERO CAROUSEL (compact, no gap) ===================== */
+    .eg-hero-carousel {
+        margin-bottom: 0;
+        flex: 0 0 auto;
+    }
+
+    .eg-hero-carousel .item img {
+        width: 100%;
+        height: 16vh;
+        min-height: 90px;
+        object-fit: cover;
+    }
+
+    .eg-hero-carousel .carousel-caption {
+        padding: 4px 0;
+        bottom: 0;
+    }
+
+    .eg-hero-carousel .carousel-caption h2 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .eg-hero-carousel .carousel-indicators {
+        margin-bottom: 2px;
+    }
+
+    /* ===================== MAIN CONTENT AREA ===================== */
+    .eg-section {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding: 6px 12px 8px;
+        margin: 0;
+    }
+
+    .eg-section-title {
+        margin: 6px 0 6px;
+        font-size: 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    /* ===================== CATEGORIES (horizontal scroll strip) ===================== */
+    .eg-categories-row {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 4px;
+        margin: 0 0 4px;
+    }
+
+    .eg-category-card-link {
+        flex: 0 0 auto;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .eg-category-card {
+        width: 76px;
+        text-align: center;
+        padding: 4px;
+    }
+
+    .eg-category-img {
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .eg-category-card h5 {
+        font-size: 10px;
+        margin: 4px 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ===================== FEATURED + RECENTLY ADDED SIDE BY SIDE ===================== */
+    .eg-side-by-side {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 4px;
+    }
+
+    .eg-product-col {
+        flex: 1 1 50%;
+        min-width: 0;
+    }
+
+    .eg-product-col .eg-section-title {
+        font-size: 13px;
+    }
+
+    .eg-product-col .row {
+        margin: 0 -3px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* Shrink whatever column classes _ProductCard.cshtml uses, and shrink the card itself */
+    .eg-product-col .row > div {
+        padding: 3px;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .eg-product-col .row .eg-product-card,
+    .eg-product-col .row .product-card,
+    .eg-product-col .row .panel,
+    .eg-product-col .row .thumbnail {
+        padding: 4px;
+        font-size: 11px;
+    }
+
+    .eg-product-col .row img {
+        height: 60px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .eg-product-col .row h4,
+    .eg-product-col .row h5 {
+        font-size: 11px;
+        margin: 2px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .eg-product-col .row .btn {
+        padding: 2px 6px;
+        font-size: 10px;
+    }
+
+    /* ===================== BEST SELLING (compact horizontal strip) ===================== */
+    .eg-best-selling-row {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 4px;
+    }
+
+    .eg-best-selling-row > div {
+        flex: 0 0 130px;
+        max-width: 130px;
+    }
+
+    .eg-best-selling-row img {
+        height: 70px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* ===================== SPECIAL OFFERS ===================== */
+    .eg-offer-banner {
+        padding: 6px 10px;
+        margin-top: 4px;
+    }
+
+    .eg-offer-banner h3 {
+        font-size: 13px;
+        margin: 0 0 4px;
+    }
+
+    .eg-offer-banner ul {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 12px;
+    }
+
+    /* ===================== RESPONSIVE BREAKPOINTS ===================== */
+
+    /* Tablets: keep side-by-side but shrink further */
+    @@media (max-width: 991px) {
+        .eg-hero-carousel .item img {
+            height: 14vh;
+        }
+    }
+
+    /* Phones: a true single "no-scroll" layout isn't usable with real content
+       on a small screen, so below 767px we stack sections and allow the page
+       to scroll normally, while keeping everything else compact. */
+    @@media (max-width: 767px) {
+        .eg-page-wrap {
+            height: auto;
+            overflow: visible;
+        }
+
+        .eg-section {
+            overflow-y: visible;
+        }
+
+        .eg-hero-carousel .item img {
+            height: 20vh;
+            min-height: 130px;
+        }
+
+        .eg-side-by-side {
+            flex-direction: column;
+        }
+
+        .eg-product-col .row > div {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .eg-category-card {
+            width: 64px;
+        }
+
+        .eg-category-img {
+            width: 38px;
+            height: 38px;
+        }
+    }
+</style>
+
+<div class="eg-page-wrap">
+
+    <!-- ===================== HERO CAROUSEL ===================== -->
+    <div id="heroCarousel" class="carousel slide eg-hero-carousel" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#heroCarousel" data-slide-to="1"></li>
+            <li data-target="#heroCarousel" data-slide-to="2"></li>
+            <li data-target="#heroCarousel" data-slide-to="3"></li>
+            <li data-target="#heroCarousel" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/Content/Images/Banners/banner-fruits.jpg" alt="Fresh Fruits" />
+                <div class="carousel-caption"><h2>Fresh Fruits, Delivered Daily</h2></div>
+            </div>
+            <div class="item">
+                <img src="~/Content/Images/Banners/banner-vegetables.jpg" alt="Fresh Vegetables" />
+                <div class="carousel-caption"><h2>Farm Fresh Vegetables</h2></div>
+            </div>
+            <div class="item">
+                <img src="~/Content/Images/Banners/banner-organic.jpg" alt="Organic Products" />
+                <div class="carousel-caption"><h2>100% Organic Products</h2></div>
+            </div>
+            <div class="item">
+                <img src="~/Content/Images/Banners/banner-dairy.jpg" alt="Dairy Products" />
+                <div class="carousel-caption"><h2>Farm Fresh Dairy</h2></div>
+            </div>
+            <div class="item">
+                <img src="~/Content/Images/Banners/banner-essentials.jpg" alt="Daily Essentials" />
+                <div class="carousel-caption"><h2>All Your Daily Essentials</h2></div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#heroCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#heroCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+
+    <div class="container-fluid eg-section">
+
+        <!-- ===================== CATEGORIES ===================== -->
+        <h3 class="eg-section-title">Shop by Category</h3>
+        <div class="eg-categories-row">
+            @foreach (var category in ViewBag.Categories)
+            {
+                <a href="@Url.Action("List", "Product", new { categoryId = category.CategoryId })" class="eg-category-card-link">
+                    <div class="eg-category-card">
+                        <img src="~/Content/Images/Categories/@category.ImagePath" alt="@category.CategoryName" class="eg-category-img" />
+                        <h5>@category.CategoryName</h5>
                     </div>
-                </div>
+                </a>
             }
         </div>
-    }
+
+        <!-- ============== FEATURED + RECENTLY ADDED (SIDE BY SIDE) ============== -->
+        <div class="eg-side-by-side">
+            <div class="eg-product-col">
+                <h3 class="eg-section-title">Featured Products</h3>
+                <div class="row">
+                    @foreach (var product in ViewBag.FeaturedProducts)
+                    {
+                        @Html.Partial("~/Views/Shared/_ProductCard.cshtml", (EGroceryStore.Models.Product)product)
+                    }
+                </div>
+            </div>
+            <div class="eg-product-col">
+                <h3 class="eg-section-title">Recently Added</h3>
+                <div class="row">
+                    @foreach (var product in ViewBag.RecentProducts)
+                    {
+                        @Html.Partial("~/Views/Shared/_ProductCard.cshtml", (EGroceryStore.Models.Product)product)
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== BEST SELLING ===================== -->
+        <h3 class="eg-section-title">Best Selling</h3>
+        <div class="eg-best-selling-row">
+            @foreach (var product in ViewBag.BestSellingProducts)
+            {
+                @Html.Partial("~/Views/Shared/_ProductCard.cshtml", (EGroceryStore.Models.Product)product)
+            }
+        </div>
+
+        <!-- ===================== SPECIAL OFFERS ===================== -->
+        @if (ViewBag.ActiveCoupons != null && ViewBag.ActiveCoupons.Count > 0)
+        {
+            <div class="eg-offer-banner">
+                <h3>Special Offers</h3>
+                <ul>
+                    @foreach (var coupon in ViewBag.ActiveCoupons)
+                    {
+                        <li>
+                            Use code <strong>@coupon.CouponCode</strong> to get
+                            @(coupon.DiscountType == "Percentage" ? coupon.DiscountValue + "% off" : "Rs. " + coupon.DiscountValue + " off")
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
 </div>

@@ -1,0 +1,328 @@
+/* =========================================
+   RESPONSIVE DESIGN
+   Desktop → Tablet → Mobile → Small Mobile
+   Covers Customer + Admin modules with existing
+   classes only. No new classes invented, no
+   functional/JS/Razor logic touched.
+   ========================================= */
+
+/* ---------- GLOBAL ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   TABLET (max-width: 991px)
+   ========================================= */
+
+@media (max-width: 991px) {
+
+    .eg-section {
+        padding: 20px 15px;
+    }
+
+    .eg-search-form,
+    .eg-search-center {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .eg-hero-carousel .item img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+    }
+
+    .eg-hero-carousel .carousel-caption {
+        max-width: 80%;
+    }
+
+    .eg-summary-box {
+        margin-top: 15px;
+        top: 80px;
+    }
+
+    .eg-sort-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .eg-sort-select {
+        max-width: 250px;
+    }
+
+    .container {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Category / product card breathing room */
+    .eg-category-card, .eg-category-card-large,
+    .eg-filter-box {
+        padding: 14px;
+    }
+
+    /* ---- Admin: narrower sidebar, content still side-by-side ---- */
+    :root { --adm-sidebar-width: 190px; }
+
+    .adm-page-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+
+/* =========================================
+   MOBILE (max-width: 767px)
+   ========================================= */
+
+@media (max-width: 767px) {
+
+    body {
+        padding-top: 60px;
+        overflow-x: hidden;
+    }
+
+    .eg-section, .eg-form-card, .adm-section-card, .adm-form-card {
+        padding: 15px 10px;
+    }
+
+    .eg-section-title {
+        font-size: 18px;
+        margin: 20px 0 12px 0;
+    }
+
+    /* Search */
+    .eg-search-form,
+    .eg-search-center {
+        width: 100%;
+        max-width: none;
+        margin: 10px 0;
+        position: static;
+        transform: none;
+    }
+
+    .eg-icon-counts {
+        position: static;
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+    }
+
+    .eg-catbar-nav {
+        justify-content: center;
+    }
+
+    /* Hero */
+    .eg-hero-carousel {
+        width: 100%;
+    }
+
+    .eg-hero-carousel .item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .eg-hero-carousel .carousel-caption {
+        max-width: 90%;
+        left: 5%;
+        padding: 10px 14px;
+        bottom: 8%;
+    }
+
+    .eg-hero-carousel .carousel-caption h2 {
+        font-size: 18px;
+    }
+
+    /* Category cards */
+    .eg-category-img { width: 60px; height: 60px; }
+
+    /* Product cards */
+    .eg-product-img { height: 140px; }
+    .eg-product-body { padding: 10px; }
+    .eg-product-actions .btn { font-size: 12px; padding: 6px 8px; }
+
+    /* Summary */
+    .eg-summary-box {
+        position: static;
+        width: 100%;
+        margin-top: 15px;
+        top: auto;
+    }
+
+    .eg-inline-form { display: block; margin: 4px 0; }
+    .eg-inline-form .btn { width: 100%; }
+
+    /* Sorting */
+    .eg-sort-bar {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .eg-sort-select {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Cards / grid gutters */
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .row > [class*="col-"] {
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-bottom: 12px;
+    }
+
+    /* Sections */
+    .eg-section h2,
+    .eg-section h3 {
+        margin-top: 10px;
+        margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+        max-width: 100%;
+    }
+
+    /* Offer banner */
+    .eg-offer-banner { padding: 16px 18px; }
+
+    /* ---- Forms (Customer + Admin, incl. AdminCoupon Add/Edit) ---- */
+    .form-group { margin-bottom: 12px; }
+    .adm-form-card, .eg-form-card { max-width: 100%; }
+
+    /* ---- Tables (AdminOrder/AdminCustomer/AdminCoupon Index pages) ---- */
+    .table-responsive {
+        border: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    table.table {
+        min-width: 600px; /* scrolls inside .table-responsive wrapper, page itself doesn't */
+    }
+
+    /* ---- Bootstrap "well" (address cards on Order/Customer Details) ---- */
+    .well, .well-sm {
+        padding: 12px;
+    }
+
+    /* ---- Pagination ---- */
+    .pagination {
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination > li > a,
+    .pagination > li > span {
+        padding: 6px 10px;
+    }
+
+    /* ---- Breadcrumb ---- */
+    .breadcrumb {
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    /* ---- Admin page header (title + action button row) ---- */
+    .adm-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* ---- Admin action buttons (Edit/Delete/Activate columns in tables) ---- */
+    .adm-action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .adm-action-buttons .btn {
+        margin-right: 0;
+    }
+
+    /* ---- Admin summary cards (Dashboard) ---- */
+    .adm-summary-card { padding: 15px; }
+    .adm-summary-card .adm-card-count { font-size: 22px; }
+
+    /* ---- Admin sidebar: stacks above content on mobile ----
+           (static stacked fallback — a true slide-in hamburger
+           menu needs _AdminLayout.cshtml / _AdminSidebar.cshtml,
+           not included in this Part's files) */
+    .admin-sidebar {
+        position: static;
+        width: 100%;
+        min-height: auto;
+        top: auto;
+        left: auto;
+    }
+    .admin-body-wrapper { flex-direction: column; }
+    .admin-content, .admin-footer { margin-left: 0; }
+
+    /* ---- Footer ---- */
+    .eg-footer .row > [class*="col-"] { margin-bottom: 18px; }
+    .eg-footer { padding: 20px 20px 10px 20px; text-align: center; }
+}
+
+
+/* =========================================
+   SMALL MOBILE (max-width: 480px)
+   ========================================= */
+
+@media (max-width: 480px) {
+
+    body {
+        padding-top: 55px;
+    }
+
+    .eg-section, .eg-form-card, .adm-section-card, .adm-form-card {
+        padding: 12px 8px;
+    }
+
+    .eg-hero-carousel .item img {
+        height: 170px;
+    }
+
+    .eg-hero-carousel .carousel-caption {
+        display: none; /* avoid text cramming on very small screens */
+    }
+
+    .eg-summary-box {
+        margin-top: 10px;
+    }
+
+    .eg-sort-bar {
+        gap: 8px;
+    }
+
+    .eg-category-img { width: 50px; height: 50px; }
+    .eg-category-card h5 { font-size: 12px; }
+
+    .eg-product-img { height: 120px; }
+    .eg-product-name { font-size: 13px; }
+    .eg-product-price { font-size: 15px; }
+
+    .eg-brand, .admin-navbar-brand { font-size: 18px; }
+    .adm-summary-card .adm-card-count { font-size: 19px; }
+
+    .btn { padding: 6px 10px; font-size: 13px; }
+}

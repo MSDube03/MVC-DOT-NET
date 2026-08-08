@@ -1,0 +1,21 @@
+@model List<EGroceryStore.Models.Category>
+@*
+    Reusable Category Sidebar - Home page aur Product List page dono
+    isi ek file ko use karte hain, taaki dono jagah bilkul same dikhe.
+    Agar category list ki styling kabhi badalni ho, sirf yeh ek file
+    edit karni padegi, dono pages apne aap update ho jayenge.
+*@
+
+<button class="btn btn-success btn-block visible-xs visible-sm" type="button" data-toggle="collapse" data-target="#egCatList">
+    <span class="glyphicon glyphicon-th-list"></span> Categories <span class="caret"></span>
+</button>
+
+<div class="eg-cat-sidebar">
+    <div class="eg-cat-sidebar-title hidden-xs hidden-sm">All Categories</div>
+    <ul class="eg-cat-sidebar-list collapse" id="egCatList">
+        @foreach (var cat in Model)
+        {
+            <li>@Html.ActionLink(cat.CategoryName, "Index", "Category", new { id = cat.CategoryId }, null)</li>
+        }
+    </ul>
+</div>
